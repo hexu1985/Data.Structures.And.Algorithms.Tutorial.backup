@@ -11,7 +11,7 @@ struct Node
 	Link next;
 };
 
-void InitNodes(ItemType);
+void InitNodes(int);
 Link NewNode(ItemType);
 void FreeNode(Link);
 

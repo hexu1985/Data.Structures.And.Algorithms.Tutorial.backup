@@ -1,12 +1,12 @@
 #include "list.h"
 
-void InitNodes(ItemType item)
+void InitNodes(int N)
 {}
 
-Link NewNode(ItemType item)
+Link NewNode(ItemType i)
 {}
 
-void FreeNode(Link link)
+void FreeNode(Link l)
 {}
 
 void InsertNext(Link l1, Link l2)
