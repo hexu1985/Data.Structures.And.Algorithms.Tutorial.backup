@@ -5,11 +5,11 @@ typedef struct Node* Link;
 
 typedef int ItemType;
 
-struct Node
+typedef struct Node
 {
 	ItemType item;
 	Link next;
-};
+} Node;
 
 void InitNodes(int);
 Link NewNode(ItemType);

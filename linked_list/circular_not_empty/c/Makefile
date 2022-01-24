@@ -7,7 +7,7 @@ INCLUDE =
 LDFLAGS = 
 LDPATH = 
 
-PROGS =	list_reversal
+PROGS =	circular_lists list_allocation
 
 .PHONY: all
 all: $(PROGS)
@@ -20,7 +20,9 @@ clean:
 %.o:%.c
 	$(CC) -o $@ -c $< $(CFLAGS) $(INCLUDE)
 
-list_reversal: list_reversal.o
+list_allocation: list_allocation.o list_functions.o
 	$(CC) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
+circular_lists: circular_lists.o
+	$(CC) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
