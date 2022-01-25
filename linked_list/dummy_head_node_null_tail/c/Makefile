@@ -7,7 +7,7 @@ INCLUDE =
 LDFLAGS = 
 LDPATH = 
 
-PROGS =	list_reversal
+PROGS =	list_reversal list_insertion_sort
 
 .PHONY: all
 all: $(PROGS)
@@ -21,6 +21,9 @@ clean:
 	$(CC) -o $@ -c $< $(CFLAGS) $(INCLUDE)
 
 list_reversal: list_reversal.o
+	$(CC) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+list_insertion_sort: list_insertion_sort.o
 	$(CC) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 
