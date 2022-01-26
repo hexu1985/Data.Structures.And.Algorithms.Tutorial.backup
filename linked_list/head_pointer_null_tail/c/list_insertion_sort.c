@@ -47,20 +47,21 @@ void PrintList(Link t)
 	printf("\n");
 }
 
-Link InsertionSort(Link head)
+Link InsertionSort(Link x)
 {
-    Link headb;
-	Link t, u, x;
+    Link head;
+    Link t, u, y;
     Link *next_ref;
-    headb = NULL;
-    for (t = head; t != NULL; t = u)
+    head = NULL;
+    for (t = x; t != NULL; t = u)
     {
         u = t->next;
-        for (next_ref = &headb, x = *next_ref; x != NULL; next_ref = &x->next, x = x->next) 
-            if (x->item > t->item) 
+        for (next_ref = &head, y = *next_ref; y != NULL; next_ref = &y->next, y = y->next) 
+            if (y->item > t->item) 
                 break;
-        t->next = x;
+        t->next = y;
         *next_ref = t;
     }
-    return headb;
+    return head;
 }
+
