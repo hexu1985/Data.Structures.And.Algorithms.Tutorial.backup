@@ -46,18 +46,19 @@ void PrintList(Link t)
 	printf("\n");
 }
 
-Link ReverseNext(Link head)
+Link ReverseNext(Link x)
 {
-    Node tmp;
-    Link b = &tmp;
-    Link t;
-    b->next = NULL;
-    while (head->next != NULL) {    // head指向的list不为空
-        t = head->next;             // 从head指向的list的头部删除节点
-        head->next = t->next;
-        t->next = b->next;           // 向b指向的list的头部插入节点
-        b->next = t;
+    Node head;
+    Link t, y;
+    y = &head;
+    y->next = NULL;
+    while (x->next != NULL) {
+        t = x->next;
+        x->next = t->next;
+
+        t->next = y->next;
+        y->next = t;
     }
 
-    return b->next;
+    return y->next;
 }
