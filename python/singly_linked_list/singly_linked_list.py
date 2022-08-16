@@ -12,7 +12,7 @@ class SinglyLinkedList:
         self.head = None
         self.count = 0
 
-    def append(self, data):
+    def Append(self, data):
         """ Append an item to the list """
         node = Node(data)
         if self.head:
@@ -33,7 +33,7 @@ class SinglyLinkedList:
 
     
 
-    def delete(self, data):
+    def Delete(self, data):
         """ Delete a node from the list """
         current = self.tail
         prev = self.tail
@@ -48,7 +48,7 @@ class SinglyLinkedList:
             prev = current
             current = current.next
 
-    def search(self, data):
+    def Search(self, data):
         """ Search through the list. Return True if data is found, otherwise
         False. """
         for node in self.iter():
@@ -72,43 +72,44 @@ class SinglyLinkedList:
             current = current.next
         current.data = value
 
-words = SinglyLinkedList()
-words.append('foo')
-words.append('bar')
-words.append('bim')
-words.append('baz')
-words.append('quux')
-
-print("access by index")
-print("here is a node: {}".format(words[1]))
-
-print("modify by index")
-words[4] = "Quux"
-print("Modified node by index: {}".format(words[4]))
-
-print("This list has {} elements.".format(words.count))
-for word in words.iter():
-    print("Got this data: {}".format(word))
-
-if words.search('foo'):
-    print("Found foo in the list.")
-if words.search('amiga'):
-    print("Found amiga in the list.")
-
-print("Now we try to delete an item")
-words.delete('bim')
-print("List now has {} elements".format(words.count))
-for word in words.iter():
-    print("data: {}".format(word))
-
-print("delete the first item in the list")
-words.delete('foo')
-print("size: {}".format(words.count))
-for word in words.iter():
-    print("data: {}".format(word))
-
-print("delete the last item in the list")
-words.delete('quux')
-print("size: {}".format(words.count))
-for word in words.iter():
-    print("data: {}".format(word))
+if __name__ == "__main__":
+    words = SinglyLinkedList()
+    words.Append('foo')
+    words.Append('bar')
+    words.Append('bim')
+    words.Append('baz')
+    words.Append('quux')
+    
+    print("access by index")
+    print("here is a node: {}".format(words[1]))
+    
+    print("modify by index")
+    words[4] = "Quux"
+    print("Modified node by index: {}".format(words[4]))
+    
+    print("This list has {} elements.".format(words.count))
+    for word in words.iter():
+        print("Got this data: {}".format(word))
+    
+    if words.Search('foo'):
+        print("Found foo in the list.")
+    if words.Search('amiga'):
+        print("Found amiga in the list.")
+    
+    print("Now we try to Delete an item")
+    words.Delete('bim')
+    print("List now has {} elements".format(words.count))
+    for word in words.iter():
+        print("data: {}".format(word))
+    
+    print("Delete the first item in the list")
+    words.Delete('foo')
+    print("size: {}".format(words.count))
+    for word in words.iter():
+        print("data: {}".format(word))
+    
+    print("Delete the last item in the list")
+    words.Delete('quux')
+    print("size: {}".format(words.count))
+    for word in words.iter():
+        print("data: {}".format(word))
