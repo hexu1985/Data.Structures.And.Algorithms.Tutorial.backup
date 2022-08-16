@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdexcept>
+
 // """ A singly-linked node. """
 template <typename T>
 struct Node {
@@ -78,7 +80,7 @@ public:
 
     // """ Append an item to the list """
     void Append(const T& data) {
-        auto node = new Node(data);
+        auto node = new Node<T>(data);
         if (tail) {
             tail->next = node;
             tail = node;
@@ -111,7 +113,7 @@ public:
 
     // """ Search through the list. Return True if data is found, otherwise
     // False. """
-    void Search(const T& data) {
+    bool Search(const T& data) {
         auto current = head;
         while (current) {
             if (current->data == data) {
@@ -119,12 +121,12 @@ public:
             }
             current = current->next;
         }
-        return false
+        return false;
     }
 
     T& operator[](int index) {
         if (index > count - 1) {
-            throw std::out_of_range("Index out of range.")
+            throw std::out_of_range("Index out of range.");
         }
         auto current = head;
         for (int n = 0; n < index; n++) {
@@ -134,7 +136,7 @@ public:
     }
 
 private:
-    Node* head;
-    Node* tail;
+    Node<T>* head;
+    Node<T>* tail;
     int count;
 };
