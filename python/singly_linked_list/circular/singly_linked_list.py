@@ -31,8 +31,6 @@ class SinglyLinkedList:
             current = current.next
             yield val
 
-    
-
     def Delete(self, data):
         """ Delete a node from the list """
         current = self.tail
