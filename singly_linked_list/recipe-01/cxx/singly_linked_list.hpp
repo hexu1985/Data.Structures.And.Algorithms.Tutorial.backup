@@ -51,6 +51,15 @@ public:
     SinglyLinkedList(): head(nullptr), tail(nullptr), count(0) {
     }
 
+    ~SinglyLinkedList() {
+        auto current = head;
+        while (current) {
+            auto node = current;
+            current = current->next;
+            delete node;
+        }
+    }
+
     // """ Iterate through the list. """
     Iterator<T> begin() {
         return Iterator<T>(head);
