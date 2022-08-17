@@ -17,47 +17,29 @@ struct Iterator {
     Iterator(Node<T>* node): current(node) {
     }
 
-    T& operator* ()
-    {
-        assert(current != nullptr);
-        return current->data;
-    }
+    T& operator* () { return current->data; }
 
-    T* operator-> ()
-    {
-        assert(current != nullptr);
-        return &current->data;
-    }
+    T* operator-> () { return &current->data; }
 
-    Iterator& operator++ ()
-    {
-        next();
+    Iterator& operator++ () {
+        current = current->next;
         return *this;
     }
 
-    Iterator operator++ (int)
-    {
+    Iterator operator++ (int) {
         Iterator tmp(*this);
-        next();
+        current = current->next;
         return tmp;
     }
 
-    bool operator== (const Iterator& other) const
-    {   
+    bool operator== (const Iterator& other) const {   
         return (this->current == other.current);
     }
 
-    bool operator!= (const Iterator& other) const
-    {
+    bool operator!= (const Iterator& other) const {
         return !(*this == other);
     }
 
-    void next()
-    {
-        assert(current != nullptr);
-        current = current->next;
-    }
-    
     Node<T>* current;
 };
 
@@ -134,6 +116,8 @@ public:
         }
         return current->data;
     }
+
+    int Count() { return count; }
 
 private:
     Node<T>* head;
