@@ -1,7 +1,7 @@
 
 RM = rm -f
 CXX = g++
-CXXFLAGS = -Wall -g
+CXXFLAGS = -Wall -g -fsanitize=leak -fno-omit-frame-pointer
 INCLUDES = 
 LDFLAGS =
 LDPATH =
