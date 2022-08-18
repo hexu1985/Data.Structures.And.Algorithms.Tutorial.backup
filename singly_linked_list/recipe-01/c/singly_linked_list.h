@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 // """ A singly-linked node. """
 struct Node {
@@ -13,7 +14,7 @@ struct Node {
 // provide by user
 Node* NewNode(ItemType);
 void FreeNode(Node*);
-bool IsEqualItem(ItemType, ItemType);
+bool IsItemEqual(ItemType, ItemType);
 
 // """ A singly-linked list. """
 struct SinglyLinkedList {
@@ -30,7 +31,7 @@ static SinglyLinkedList* NewList() {
     list->count = 0;
 }
 
-void FreeList(SinglyLinkedList* list) {
+static void FreeList(SinglyLinkedList* list) {
     Node* current = list->head;
     while (current) {
         Node* node = current;
@@ -40,7 +41,7 @@ void FreeList(SinglyLinkedList* list) {
 }
 
 // """ Iterate through the list. """
-void Travel(SinglyLinkedList* list, void (*travel)(ItemType)) {
+static void Travel(SinglyLinkedList* list, void (*travel)(ItemType)) {
     Node* current = list->head;
     while (current) {
         travel(current->data);
@@ -49,7 +50,7 @@ void Travel(SinglyLinkedList* list, void (*travel)(ItemType)) {
 }
 
 // """ Append an item to the list """
-void Append(SinglyLinkedList* list, ItemType data) {
+static void Append(SinglyLinkedList* list, ItemType data) {
     Node* node = NewNode(data);
     if (list->tail) {
         list->tail->next = node;
@@ -62,12 +63,61 @@ void Append(SinglyLinkedList* list, ItemType data) {
 }
 
 // """ Delete a node from the list """
-void Delete(SinglyLinkedList* list, ItemType);
+static void Delete(SinglyLinkedList* list, ItemType data) {
+    Node* current = list->head;
+    Node* prev = list->head;
+    while (current) {
+        if (IsItemEqual(current->data, data)) {
+            if (current == list->head) {
+                list->head = current->next;
+            } else {
+                prev->next = current->next;
+            }
+            FreeNode(current);
+            list->count -= 1;
+        } else {
+            prev = current;
+        }
+        current = prev->next;
+    }
+}
 
 // """ Search through the list. Return True if data is found, otherwise
 // False. """
-bool Search(SinglyLinkedList*, ItemType);
+static bool Search(SinglyLinkedList* list, ItemType data) {
+    Node* current = list->head;
+    while (current) {
+        if (IsItemEqual(current->data, data)) {
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
+}
 
-ItemType GetItem(SinglyLinkedList*, int index);
-void SetItem(SinglyLinkedList*, int index, ItemType);
+static ItemType GetItem(SinglyLinkedList* list, int index) {
+    if (index > list->count - 1) {
+        fprintf(stderr, "Index out of range.");
+        exit(1);
+    }
+
+    Node* current = list->head;
+    for (int n = 0; n < index; n++) {
+        current = current->next;
+    }
+    return current->data;
+}
+
+static void SetItem(SinglyLinkedList* list, int index, ItemType data) {
+    if (index > list->count - 1) {
+        fprintf(stderr, "Index out of range.");
+        exit(1);
+    }
+
+    Node* current = list->head;
+    for (int n = 0; n < index; n++) {
+        current = current->next;
+    }
+    current->data = data;
+}
 
