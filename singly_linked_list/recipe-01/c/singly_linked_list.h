@@ -28,6 +28,7 @@ static SinglyLinkedList* NewList() {
     list->head = NULL;
     list->tail = NULL;
     list->count = 0;
+    return list;
 }
 
 static void FreeList(SinglyLinkedList* list) {
@@ -37,6 +38,7 @@ static void FreeList(SinglyLinkedList* list) {
         current = current->next;
         FreeNode(node);
     }
+    free(list);
 }
 
 // """ Iterate through the list. """
@@ -150,4 +152,8 @@ static void SetItemB(SinglyLinkedList* list, int index, ItemType data) {
 
 static void SetItem(SinglyLinkedList* list, int index, ItemType data, void (*SetData)(Node*, ItemType)) {
     return SetData ? SetItemA(list, index, data, SetData) : SetItemB(list, index, data);
+}
+
+static int Count(SinglyLinkedList* list) {
+    return list->count;
 }

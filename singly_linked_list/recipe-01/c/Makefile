@@ -1,7 +1,7 @@
 
 RM = rm -f
 CC = gcc
-CFLAGS = -Wall -g
+CFLAGS = -Wall -g -fsanitize=leak -fno-omit-frame-pointer
 INCLUDES = 
 LDFLAGS =
 LDPATH =
