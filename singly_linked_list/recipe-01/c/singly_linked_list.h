@@ -6,22 +6,21 @@
 #include <stdio.h>
 
 // """ A singly-linked node. """
-struct Node {
-    Node* next;
+typedef struct Node {
+    struct Node* next;
     ItemType data;
-};
+} Node;
 
 // provide by user
 Node* NewNode(ItemType);
 void FreeNode(Node*);
-bool IsItemEqual(ItemType, ItemType);
 
 // """ A singly-linked list. """
-struct SinglyLinkedList {
+typedef struct SinglyLinkedList {
     Node* head;
     Node* tail;
     int count;
-};
+} SinglyLinkedList;
 
 // """ Create an empty list. """
 static SinglyLinkedList* NewList() {
@@ -63,11 +62,11 @@ static void Append(SinglyLinkedList* list, ItemType data) {
 }
 
 // """ Delete a node from the list """
-static void Delete(SinglyLinkedList* list, ItemType data) {
+static void Delete(SinglyLinkedList* list, ItemType data, bool (*IsEqual)(ItemType, ItemType)) {
     Node* current = list->head;
     Node* prev = list->head;
     while (current) {
-        if (IsItemEqual(current->data, data)) {
+        if (IsEqual(current->data, data)) {
             if (current == list->head) {
                 list->head = current->next;
             } else {
@@ -84,15 +83,30 @@ static void Delete(SinglyLinkedList* list, ItemType data) {
 
 // """ Search through the list. Return True if data is found, otherwise
 // False. """
-static bool Search(SinglyLinkedList* list, ItemType data) {
+static bool SearchA(SinglyLinkedList* list, ItemType data, bool (*IsEqual)(ItemType, ItemType)) {
     Node* current = list->head;
     while (current) {
-        if (IsItemEqual(current->data, data)) {
+        if (IsEqual(current->data, data)) {
             return true;
         }
         current = current->next;
     }
     return false;
+}
+
+static bool SearchB(SinglyLinkedList* list, ItemType data) {
+    Node* current = list->head;
+    while (current) {
+        if (current->data == data) {
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
+}
+
+static bool Search(SinglyLinkedList* list, ItemType data, bool (*IsEqual)(ItemType, ItemType)) {
+    return IsEqual ? SearchA(list, data, IsEqual) : SearchB(list, data);
 }
 
 static ItemType GetItem(SinglyLinkedList* list, int index) {
@@ -108,7 +122,20 @@ static ItemType GetItem(SinglyLinkedList* list, int index) {
     return current->data;
 }
 
-static void SetItem(SinglyLinkedList* list, int index, ItemType data) {
+static void SetItemA(SinglyLinkedList* list, int index, ItemType data, void (*SetData)(Node*, ItemType)) {
+    if (index > list->count - 1) {
+        fprintf(stderr, "Index out of range.");
+        exit(1);
+    }
+
+    Node* current = list->head;
+    for (int n = 0; n < index; n++) {
+        current = current->next;
+    }
+    SetData(current, data);
+}
+
+static void SetItemB(SinglyLinkedList* list, int index, ItemType data) {
     if (index > list->count - 1) {
         fprintf(stderr, "Index out of range.");
         exit(1);
@@ -121,3 +148,6 @@ static void SetItem(SinglyLinkedList* list, int index, ItemType data) {
     current->data = data;
 }
 
+static void SetItem(SinglyLinkedList* list, int index, ItemType data, void (*SetData)(Node*, ItemType)) {
+    return SetData ? SetItemA(list, index, data, SetData) : SetItemB(list, index, data);
+}

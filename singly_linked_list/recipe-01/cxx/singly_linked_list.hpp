@@ -60,6 +60,9 @@ public:
         }
     }
 
+    SinglyLinkedList(const SinglyLinkedList&) = delete;
+    SinglyLinkedList& operator=(const SinglyLinkedList&) = delete; 
+
     // """ Iterate through the list. """
     Iterator<T> begin() {
         return Iterator<T>(head);
