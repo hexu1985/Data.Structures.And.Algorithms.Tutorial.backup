@@ -105,6 +105,20 @@ public:
         }
     }
 
+    // """ Reverse the links of the list """
+    void Reverse() {
+        Node<T>* next;
+        Node<T>* current = head;
+        Node<T>* prev = nullptr;
+        while (current) {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        swap(head, tail);
+    }
+
     // """ Search through the list. Return True if data is found, otherwise
     // False. """
     bool Search(const T& data) {

@@ -2,8 +2,10 @@
 #include <string>
 #include <iostream>
 
-int main()
+void test()
 {
+    std::cout << "----------------------------" << __func__ << "---------------------------\n";
+
     SinglyLinkedList<std::string> words;
     words.Append("foo");
     words.Append("bar");
@@ -44,7 +46,33 @@ int main()
     std::cout << "size: " << words.Count() << '\n';
     for (const auto& word : words)
         std::cout << "data: " << word << '\n';
+}
 
+void test_reverse()
+{
+    std::cout << "----------------------------" << __func__ << "---------------------------\n";
+
+    SinglyLinkedList<std::string> words;
+    words.Append("foo");
+    words.Append("bar");
+    words.Append("bim");
+    words.Append("baz");
+    words.Append("quux");
+
+    std::cout << "The origin list" << '\n';
+    for (const auto& word : words)
+        std::cout << "data: " << word << '\n';
+
+    std::cout << "Reverse the list" << '\n';
+    words.Reverse();
+    for (const auto& word : words)
+        std::cout << "data: " << word << '\n';
+}
+
+int main()
+{
+    test();
+    test_reverse();
     return 0;
 }
 
