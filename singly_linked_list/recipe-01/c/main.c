@@ -9,8 +9,10 @@ void print2(ItemType data) {
     printf("data: %s\n", data);
 }
 
-int main()
+void test()
 {
+    printf("----------------------------%s---------------------------\n", __func__);
+
     SinglyLinkedList* words = NewList();
     Append(words, "foo");
     Append(words, "bar");
@@ -49,6 +51,33 @@ int main()
     Travel(words, &print2);
 
     FreeList(words);
+}
+
+void test_reverse()
+{
+    printf("----------------------------%s---------------------------\n", __func__);
+
+    SinglyLinkedList* words = NewList();
+    Append(words, "foo");
+    Append(words, "bar");
+    Append(words, "bim");
+    Append(words, "baz");
+    Append(words, "quux");
+
+    printf("The origin list\n");
+    Travel(words, &print2);
+
+    printf("Reverse the list\n");
+    Reverse(words);
+    Travel(words, &print2);
+
+    FreeList(words);
+}
+
+int main()
+{
+    test();
+    test_reverse();
 
     return 0;
 }

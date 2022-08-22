@@ -83,6 +83,23 @@ static void Delete(SinglyLinkedList* list, ItemType data, bool (*IsEqual)(ItemTy
     }
 }
 
+// """ Reverse the links of the list """
+static void Reverse(SinglyLinkedList* list) {
+    Node* next;
+    Node* current = list->head;
+    Node* prev = NULL;
+    while (current) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    // swap head and tail
+    Node* tmp = list->head;
+    list->head = list->tail;
+    list->tail = tmp;
+}
+
 // """ Search through the list. Return True if data is found, otherwise
 // False. """
 static bool SearchA(SinglyLinkedList* list, ItemType data, bool (*IsEqual)(ItemType, ItemType)) {
