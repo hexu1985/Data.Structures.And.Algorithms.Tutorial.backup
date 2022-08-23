@@ -20,17 +20,22 @@ static void FreeStringNode(Node* node) {
     free(node);
 }
 
-static bool IsStringEqual(ItemType a, ItemType b) {
+static bool StringEqual(ItemType a, ItemType b) {
     return strcmp(a, b) == 0;
 }
 
-static void SetStringItem(Node* node, ItemType data) {
+static void SetString(Node* node, ItemType data) {
     strncpy(node->data, data, MAXLINE-1);
+}
+
+static bool StringLess(ItemType a, ItemType b) {
+    return strcmp(a, b) < 0;
 }
 
 static void Init() {
     NewNode = &NewStringNode;
     FreeNode = &FreeStringNode;
-    IsEqual = &IsStringEqual;
-    SetItem = &SetStringItem;
+    ItemEqual = &StringEqual;
+    SetItem = &SetString;
+    ItemLess = &StringLess;
 }

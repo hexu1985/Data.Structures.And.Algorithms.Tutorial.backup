@@ -74,12 +74,34 @@ void test_reverse()
     FreeList(words);
 }
 
+void test_sort()
+{
+    printf("----------------------------%s---------------------------\n", __func__);
+
+    SinglyLinkedList* words = NewList();
+    ListAppend(words, "foo");
+    ListAppend(words, "bar");
+    ListAppend(words, "bim");
+    ListAppend(words, "baz");
+    ListAppend(words, "quux");
+
+    printf("The origin list\n");
+    ListTravel(words, &print2);
+
+    printf("Sort the list\n");
+    ListSort(words);
+    ListTravel(words, &print2);
+
+    FreeList(words);
+}
+
 int main()
 {
     Init();
 
     test();
     test_reverse();
+    test_sort();
 
     return 0;
 }

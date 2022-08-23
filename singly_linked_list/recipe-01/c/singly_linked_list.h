@@ -21,7 +21,7 @@ static void DefaultFreeNode(Node* node) {
     free(node);
 }
 
-static bool DefaultIsEqual(ItemType a, ItemType b) {
+static bool DefaultItemEqual(ItemType a, ItemType b) {
     return a == b;
 }
 
@@ -29,10 +29,15 @@ static void DefaultSetItem(Node* node, ItemType data) {
     node->data = data;
 }
 
+static bool DefaultItemLess(ItemType a, ItemType b) {
+    return a < b;
+}
+
 void (*FreeNode)(Node*) = &DefaultFreeNode;
 Node* (*NewNode)(ItemType) = &DefaultNewNode;
-bool (*IsEqual)(ItemType, ItemType) = &DefaultIsEqual;
+bool (*ItemEqual)(ItemType, ItemType) = &DefaultItemEqual;
 void (*SetItem)(Node* node, ItemType) = &DefaultSetItem;
+bool (*ItemLess)(ItemType, ItemType) = &DefaultItemLess;
 
 // """ A singly-linked list. """
 typedef struct SinglyLinkedList {
@@ -61,10 +66,10 @@ static void FreeList(SinglyLinkedList* list) {
 }
 
 // """ Iterate through the list. """
-static void ListTravel(SinglyLinkedList* list, void (*travel)(ItemType)) {
+static void ListTravel(SinglyLinkedList* list, void (*VisitItem)(ItemType)) {
     Node* current = list->head;
     while (current) {
-        travel(current->data);
+        VisitItem(current->data);
         current = current->next;
     }
 }
@@ -87,7 +92,7 @@ static void ListDelete(SinglyLinkedList* list, ItemType data) {
     Node* current = list->head;
     Node* prev = list->head;
     while (current) {
-        if (IsEqual(current->data, data)) {
+        if (ItemEqual(current->data, data)) {
             if (current == list->head) {
                 list->head = current->next;
             } else {
@@ -107,7 +112,7 @@ static void ListDelete(SinglyLinkedList* list, ItemType data) {
 static bool ListSearch(SinglyLinkedList* list, ItemType data) {
     Node* current = list->head;
     while (current) {
-        if (IsEqual(current->data, data)) {
+        if (ItemEqual(current->data, data)) {
             return true;
         }
         current = current->next;
@@ -162,5 +167,40 @@ static void ListReverse(SinglyLinkedList* list) {
     list->tail = tmp;
 }
 
+// """ Sort the list """
+void ListSort(SinglyLinkedList* list) {
+    SinglyLinkedList output_list;
+    output_list.head = NULL;
+    output_list.tail = NULL;
+
+    Node* current = list->head;
+    while (current) {
+        Node* next = current->next;
+
+        // insert the node into output_list and keep sorted
+        Node* output_current = output_list.head;
+        Node* output_prev = output_list.head;
+        while (output_current) {
+            if (ItemLess(current->data, output_current->data))
+                break;
+            output_prev = output_current;
+            output_current = output_current->next;
+        }
+        current->next = output_current;
+        if (output_current == output_list.head) {
+            output_list.head = current;
+        } else {
+            output_prev->next = current;
+        }
+        if (current->next == NULL) {
+            output_list.tail = current;
+        }
+
+        current = next;
+    }
+
+    list->head = output_list.head;
+    list->tail = output_list.tail;
+}
 
 
