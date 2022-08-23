@@ -46,6 +46,19 @@ class SinglyLinkedList:
             prev = current
             current = current.next
 
+    def Reverse(self):
+        """ Reverse the links of the list """
+        current = self.head
+        prev = None
+        while current:
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+
+        # swap head and tail
+        self.head, self.tail = self.tail, self.head
+
     def Search(self, data):
         """ Search through the list. Return True if data is found, otherwise
         False. """
@@ -70,7 +83,9 @@ class SinglyLinkedList:
             current = current.next
         current.data = value
 
-if __name__ == "__main__":
+def test():
+    print("----------------------------test---------------------------");
+
     words = SinglyLinkedList()
     words.Append('foo')
     words.Append('bar')
@@ -111,3 +126,26 @@ if __name__ == "__main__":
     print("size: {}".format(words.count))
     for word in words.iter():
         print("data: {}".format(word))
+
+def test_reverse():
+    print("----------------------------test_reverse---------------------------");
+
+    words = SinglyLinkedList()
+    words.Append('foo')
+    words.Append('bar')
+    words.Append('bim')
+    words.Append('baz')
+    words.Append('quux')
+    
+    print("The origin list");
+    for word in words.iter():
+        print("data: {}".format(word))
+
+    print("Reverse the list");
+    words.Reverse();
+    for word in words.iter():
+        print("data: {}".format(word))
+
+if __name__ == "__main__":
+    test()
+    test_reverse()
