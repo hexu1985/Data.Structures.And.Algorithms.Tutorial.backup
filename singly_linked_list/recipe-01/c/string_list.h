@@ -7,7 +7,7 @@ typedef char* ItemType;
 
 #define MAXLINE 128
 
-Node* NewNode(ItemType data) {
+static Node* NewStringNode(ItemType data) {
     Node* node = malloc(sizeof(Node));
     node->data = malloc(MAXLINE);
     memset(node->data, 0, MAXLINE);
@@ -15,19 +15,22 @@ Node* NewNode(ItemType data) {
     return node;
 }
 
-void FreeNode(Node* node) {
+static void FreeStringNode(Node* node) {
     free(node->data);
     free(node);
 }
 
-bool IsEqual(ItemType a, ItemType b) {
+static bool IsStringEqual(ItemType a, ItemType b) {
     return strcmp(a, b) == 0;
 }
 
-void SetData(Node* node, ItemType data) {
+static void SetStringItem(Node* node, ItemType data) {
     strncpy(node->data, data, MAXLINE-1);
 }
 
-bool IsLess(ItemType a, ItemType b) {
-    return strcmp(a, b) < 0;
+static void Init() {
+    NewNode = &NewStringNode;
+    FreeNode = &FreeStringNode;
+    IsEqual = &IsStringEqual;
+    SetItem = &SetStringItem;
 }
