@@ -142,6 +142,7 @@ public:
             prev = current;
             current = next;
         }
+        using std::swap;
         swap(head, tail);
     }
 
