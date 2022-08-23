@@ -46,19 +46,6 @@ class SinglyLinkedList:
             prev = current
             current = current.next
 
-    def Reverse(self):
-        """ Reverse the links of the list """
-        current = self.head
-        prev = None
-        while current:
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-
-        # swap head and tail
-        self.head, self.tail = self.tail, self.head
-
     def Search(self, data):
         """ Search through the list. Return True if data is found, otherwise
         False. """
@@ -85,4 +72,47 @@ class SinglyLinkedList:
         for n in range(index):
             current = current.next
         current.data = value
+
+    def Reverse(self):
+        """ Reverse the links of the list """
+        current = self.head
+        prev = None
+        while current:
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+
+        # swap head and tail
+        self.head, self.tail = self.tail, self.head
+
+    def Sort(self):
+        """ Sort the list """
+        output_list = SinglyLinkedList()
+        current = self.head
+        while current:
+            next = current.next
+
+            # insert the node into output_list and keep sorted
+            output_current = output_list.head 
+            output_prev = output_list.head
+            while output_current:
+                if current.data < output_current.data:
+                    break
+                output_prev = output_current
+                output_current = output_current.next
+
+            current.next = output_current
+            if output_current == output_list.head:
+                output_list.head = current
+            else:
+                output_prev.next = current
+
+            if current.next is None:
+                output_list.tail = current
+
+            current = next
+
+        self.head = output_list.head
+        self.tail = output_list.tail
 

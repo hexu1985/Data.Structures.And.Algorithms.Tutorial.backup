@@ -152,7 +152,7 @@ public:
         while (current) {
             auto next = current->next;
 
-            // """ insert the node into output_list and keep sorted """
+            // insert the node into output_list and keep sorted
             auto output_current = output_list.head;
             auto output_prev = output_list.head;
             while (output_current) {
