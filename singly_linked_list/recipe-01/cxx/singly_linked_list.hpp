@@ -105,20 +105,6 @@ public:
         }
     }
 
-    // """ Reverse the links of the list """
-    void Reverse() {
-        Node<T>* next;
-        Node<T>* current = head;
-        Node<T>* prev = nullptr;
-        while (current) {
-            next = current->next;
-            current->next = prev;
-            prev = current;
-            current = next;
-        }
-        swap(head, tail);
-    }
-
     // """ Search through the list. Return True if data is found, otherwise
     // False. """
     bool Search(const T& data) {
@@ -144,6 +130,56 @@ public:
     }
 
     int Count() { return count; }
+
+    // """ Reverse the links of the list """
+    void Reverse() {
+        Node<T>* next;
+        Node<T>* current = head;
+        Node<T>* prev = nullptr;
+        while (current) {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        swap(head, tail);
+    }
+
+    // """ Sort the list """
+    void Sort() {
+        SinglyLinkedList output_list;
+        auto current = head;
+        while (current) {
+            auto next = current->next;
+
+            // """ insert the node into output_list and keep sorted """
+            auto output_current = output_list.head;
+            auto output_prev = output_list.head;
+            while (output_current) {
+                if (current->data < output_current->data)
+                    break;
+                output_prev = output_current;
+                output_current = output_current->next;
+            }
+            current->next = output_current;
+            if (output_current == output_list.head) {
+                output_list.head = current;
+            } else {
+                output_prev->next = current;
+            }
+            if (current->next == nullptr) {
+                output_list.tail = current;
+            }
+
+            current = next;
+        }
+
+        head = output_list.head;
+        tail = output_list.tail;
+
+        output_list.head = nullptr;
+        output_list.tail = nullptr;
+    }
 
 private:
     Node<T>* head;
