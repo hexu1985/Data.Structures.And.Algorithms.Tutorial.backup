@@ -42,7 +42,7 @@ static void FreeList(SinglyLinkedList* list) {
 }
 
 // """ Iterate through the list. """
-static void Travel(SinglyLinkedList* list, void (*travel)(ItemType)) {
+static void ListTravel(SinglyLinkedList* list, void (*travel)(ItemType)) {
     Node* current = list->head;
     while (current) {
         travel(current->data);
@@ -51,7 +51,7 @@ static void Travel(SinglyLinkedList* list, void (*travel)(ItemType)) {
 }
 
 // """ Append an item to the list """
-static void Append(SinglyLinkedList* list, ItemType data) {
+static void ListAppend(SinglyLinkedList* list, ItemType data) {
     Node* node = NewNode(data);
     if (list->tail) {
         list->tail->next = node;
@@ -64,7 +64,7 @@ static void Append(SinglyLinkedList* list, ItemType data) {
 }
 
 // """ Delete a node from the list """
-static void Delete(SinglyLinkedList* list, ItemType data, bool (*IsEqual)(ItemType, ItemType)) {
+static void ListDelete(SinglyLinkedList* list, ItemType data, bool (*IsEqual)(ItemType, ItemType)) {
     Node* current = list->head;
     Node* prev = list->head;
     while (current) {
@@ -81,23 +81,6 @@ static void Delete(SinglyLinkedList* list, ItemType data, bool (*IsEqual)(ItemTy
         }
         current = prev->next;
     }
-}
-
-// """ Reverse the links of the list """
-static void Reverse(SinglyLinkedList* list) {
-    Node* next;
-    Node* current = list->head;
-    Node* prev = NULL;
-    while (current) {
-        next = current->next;
-        current->next = prev;
-        prev = current;
-        current = next;
-    }
-    // swap head and tail
-    Node* tmp = list->head;
-    list->head = list->tail;
-    list->tail = tmp;
 }
 
 // """ Search through the list. Return True if data is found, otherwise
@@ -124,11 +107,11 @@ static bool SearchB(SinglyLinkedList* list, ItemType data) {
     return false;
 }
 
-static bool Search(SinglyLinkedList* list, ItemType data, bool (*IsEqual)(ItemType, ItemType)) {
+static bool ListSearch(SinglyLinkedList* list, ItemType data, bool (*IsEqual)(ItemType, ItemType)) {
     return IsEqual ? SearchA(list, data, IsEqual) : SearchB(list, data);
 }
 
-static ItemType GetItem(SinglyLinkedList* list, int index) {
+static ItemType ListGetItem(SinglyLinkedList* list, int index) {
     if (index > list->count - 1) {
         fprintf(stderr, "Index out of range.");
         exit(1);
@@ -167,10 +150,30 @@ static void SetItemB(SinglyLinkedList* list, int index, ItemType data) {
     current->data = data;
 }
 
-static void SetItem(SinglyLinkedList* list, int index, ItemType data, void (*SetData)(Node*, ItemType)) {
+static void ListSetItem(SinglyLinkedList* list, int index, ItemType data, void (*SetData)(Node*, ItemType)) {
     return SetData ? SetItemA(list, index, data, SetData) : SetItemB(list, index, data);
 }
 
-static int Count(SinglyLinkedList* list) {
+static int ListCount(SinglyLinkedList* list) {
     return list->count;
 }
+
+// """ Reverse the links of the list """
+static void ListReverse(SinglyLinkedList* list) {
+    Node* next;
+    Node* current = list->head;
+    Node* prev = NULL;
+    while (current) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    // swap head and tail
+    Node* tmp = list->head;
+    list->head = list->tail;
+    list->tail = tmp;
+}
+
+
+

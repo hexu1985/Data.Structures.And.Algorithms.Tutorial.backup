@@ -27,3 +27,7 @@ bool IsEqual(ItemType a, ItemType b) {
 void SetData(Node* node, ItemType data) {
     strncpy(node->data, data, MAXLINE-1);
 }
+
+bool IsLess(ItemType a, ItemType b) {
+    return strcmp(a, b) < 0;
+}

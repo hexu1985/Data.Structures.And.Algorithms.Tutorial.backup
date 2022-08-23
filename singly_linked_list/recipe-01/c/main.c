@@ -14,41 +14,41 @@ void test()
     printf("----------------------------%s---------------------------\n", __func__);
 
     SinglyLinkedList* words = NewList();
-    Append(words, "foo");
-    Append(words, "bar");
-    Append(words, "bim");
-    Append(words, "baz");
-    Append(words, "quux");
+    ListAppend(words, "foo");
+    ListAppend(words, "bar");
+    ListAppend(words, "bim");
+    ListAppend(words, "baz");
+    ListAppend(words, "quux");
 
     printf("access by index\n");
-    printf("here is a node: %s\n", GetItem(words, 1));
+    printf("here is a node: %s\n", ListGetItem(words, 1));
     
     printf("modify by index\n");
-    SetItem(words, 4, "Quux", &SetData);
-    printf("Modified node by index: %s\n", GetItem(words, 4));
+    ListSetItem(words, 4, "Quux", &SetData);
+    printf("Modified node by index: %s\n", ListGetItem(words, 4));
 
-    printf("This list has %d elements.\n", Count(words));
-    Travel(words, &print1);
+    printf("This list has %d elements.\n", ListCount(words));
+    ListTravel(words, &print1);
 
-    if (Search(words, "foo", &IsEqual))
+    if (ListSearch(words, "foo", &IsEqual))
         printf("Found foo in the list.\n");
-    if (Search(words, "amiga", &IsEqual))
+    if (ListSearch(words, "amiga", &IsEqual))
         printf("Found amiga in the list.\n");
     
     printf("Now we try to Delete an item\n");
-    Delete(words, "bim", &IsEqual);
-    printf("List now has %d elements\n", Count(words));
-    Travel(words, &print2);
+    ListDelete(words, "bim", &IsEqual);
+    printf("List now has %d elements\n", ListCount(words));
+    ListTravel(words, &print2);
     
     printf("Delete the first item in the list\n");
-    Delete(words, "foo", &IsEqual);
-    printf("size: %d\n", Count(words));
-    Travel(words, &print2);
+    ListDelete(words, "foo", &IsEqual);
+    printf("size: %d\n", ListCount(words));
+    ListTravel(words, &print2);
     
     printf("Delete the last item in the list\n");
-    Delete(words, "quux", &IsEqual);
-    printf("size: %d\n", Count(words));
-    Travel(words, &print2);
+    ListDelete(words, "quux", &IsEqual);
+    printf("size: %d\n", ListCount(words));
+    ListTravel(words, &print2);
 
     FreeList(words);
 }
@@ -58,18 +58,18 @@ void test_reverse()
     printf("----------------------------%s---------------------------\n", __func__);
 
     SinglyLinkedList* words = NewList();
-    Append(words, "foo");
-    Append(words, "bar");
-    Append(words, "bim");
-    Append(words, "baz");
-    Append(words, "quux");
+    ListAppend(words, "foo");
+    ListAppend(words, "bar");
+    ListAppend(words, "bim");
+    ListAppend(words, "baz");
+    ListAppend(words, "quux");
 
     printf("The origin list\n");
-    Travel(words, &print2);
+    ListTravel(words, &print2);
 
     printf("Reverse the list\n");
-    Reverse(words);
-    Travel(words, &print2);
+    ListReverse(words);
+    ListTravel(words, &print2);
 
     FreeList(words);
 }
