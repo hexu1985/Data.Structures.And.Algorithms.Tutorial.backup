@@ -13,86 +13,86 @@ void test()
 {
     printf("----------------------------%s---------------------------\n", __func__);
 
-    SinglyLinkedList* words = NewList();
-    ListAppend(words, 627);
-    ListAppend(words, 758);
-    ListAppend(words, 113);
-    ListAppend(words, 101);
-    ListAppend(words, 515);
+    SinglyLinkedList* numbers = NewList();
+    ListAppend(numbers, 627);
+    ListAppend(numbers, 758);
+    ListAppend(numbers, 113);
+    ListAppend(numbers, 101);
+    ListAppend(numbers, 515);
 
     printf("access by index\n");
-    printf("here is a node: %d\n", ListGetItem(words, 1));
+    printf("here is a node: %d\n", ListGetItem(numbers, 1));
     
     printf("modify by index\n");
-    ListSetItem(words, 4, 1515);
-    printf("Modified node by index: %d\n", ListGetItem(words, 4));
+    ListSetItem(numbers, 4, 1515);
+    printf("Modified node by index: %d\n", ListGetItem(numbers, 4));
 
-    printf("This list has %d elements.\n", ListCount(words));
-    ListTravel(words, &print1);
+    printf("This list has %d elements.\n", ListCount(numbers));
+    ListTravel(numbers, &print1);
 
-    if (ListSearch(words, 627))
+    if (ListSearch(numbers, 627))
         printf("Found 627 in the list.\n");
-    if (ListSearch(words, 838))
+    if (ListSearch(numbers, 838))
         printf("Found 838 in the list.\n");
     
     printf("Now we try to Delete an item\n");
-    ListDelete(words, 113);
-    printf("List now has %d elements\n", ListCount(words));
-    ListTravel(words, &print2);
+    ListDelete(numbers, 113);
+    printf("List now has %d elements\n", ListCount(numbers));
+    ListTravel(numbers, &print2);
     
     printf("Delete the first item in the list\n");
-    ListDelete(words, 627);
-    printf("size: %d\n", ListCount(words));
-    ListTravel(words, &print2);
+    ListDelete(numbers, 627);
+    printf("size: %d\n", ListCount(numbers));
+    ListTravel(numbers, &print2);
     
     printf("Delete the last item in the list\n");
-    ListDelete(words, 515);
-    printf("size: %d\n", ListCount(words));
-    ListTravel(words, &print2);
+    ListDelete(numbers, 515);
+    printf("size: %d\n", ListCount(numbers));
+    ListTravel(numbers, &print2);
 
-    FreeList(words);
+    FreeList(numbers);
 }
 
 void test_reverse()
 {
     printf("----------------------------%s---------------------------\n", __func__);
 
-    SinglyLinkedList* words = NewList();
-    ListAppend(words, 627);
-    ListAppend(words, 758);
-    ListAppend(words, 113);
-    ListAppend(words, 101);
-    ListAppend(words, 515);
+    SinglyLinkedList* numbers = NewList();
+    ListAppend(numbers, 627);
+    ListAppend(numbers, 758);
+    ListAppend(numbers, 113);
+    ListAppend(numbers, 101);
+    ListAppend(numbers, 515);
 
     printf("The origin list\n");
-    ListTravel(words, &print2);
+    ListTravel(numbers, &print2);
 
     printf("Reverse the list\n");
-    ListReverse(words);
-    ListTravel(words, &print2);
+    ListReverse(numbers);
+    ListTravel(numbers, &print2);
 
-    FreeList(words);
+    FreeList(numbers);
 }
 
 void test_sort()
 {
     printf("----------------------------%s---------------------------\n", __func__);
 
-    SinglyLinkedList* words = NewList();
-    ListAppend(words, 627);
-    ListAppend(words, 758);
-    ListAppend(words, 113);
-    ListAppend(words, 101);
-    ListAppend(words, 515);
+    SinglyLinkedList* numbers = NewList();
+    ListAppend(numbers, 627);
+    ListAppend(numbers, 758);
+    ListAppend(numbers, 113);
+    ListAppend(numbers, 101);
+    ListAppend(numbers, 515);
 
     printf("The origin list\n");
-    ListTravel(words, &print2);
+    ListTravel(numbers, &print2);
 
     printf("Sort the list\n");
-    ListSort(words);
-    ListTravel(words, &print2);
+    ListSort(numbers);
+    ListTravel(numbers, &print2);
 
-    FreeList(words);
+    FreeList(numbers);
 }
 
 int main()
