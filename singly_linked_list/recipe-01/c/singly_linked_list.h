@@ -98,6 +98,9 @@ static void ListDelete(SinglyLinkedList* list, ItemType data) {
             } else {
                 prev->next = current->next;
             }
+            if (current == list->tail) {
+                list->tail = list->head ? prev : NULL;
+            }
             FreeNode(current);
             list->count -= 1;
         } else {

@@ -96,6 +96,9 @@ public:
                 } else {
                     prev->next = current->next;
                 }
+                if (current == tail) {
+                    tail = head ? prev : nullptr;
+                }
                 delete current;
                 count -= 1;
             } else {

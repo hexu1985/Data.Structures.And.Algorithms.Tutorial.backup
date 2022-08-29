@@ -42,7 +42,7 @@ class SinglyLinkedList:
                 else:
                     prev.next = current.next
                 if current == self.tail:
-                    self.tail = None if self.head == None else prev
+                    self.tail = prev if self.head else None
                 self.count -= 1
                 return
             prev = current
