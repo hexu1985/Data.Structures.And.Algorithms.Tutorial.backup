@@ -41,6 +41,8 @@ class SinglyLinkedList:
                     self.head = current.next
                 else:
                     prev.next = current.next
+                if current == self.tail:
+                    self.tail = None if self.head == None else prev
                 self.count -= 1
                 return
             prev = current
