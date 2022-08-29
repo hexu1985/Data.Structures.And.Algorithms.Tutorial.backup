@@ -94,6 +94,9 @@ public:
         while (current) {
             if (current->data == data) {
                 prev->next = current->next;
+                if (current == tail) {
+                    tail = prev;
+                }
                 delete current;
                 count -= 1;
             } else {
