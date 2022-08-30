@@ -17,7 +17,7 @@ def test():
     
     print("This list has {} elements.".format(words.count))
     for word in words:
-        print("Got this data: {}".format(word))
+        print("data: {}".format(word))
     
     if words.Search('foo'):
         print("Found foo in the list.")
@@ -37,7 +37,7 @@ def test():
         print("data: {}".format(word))
     
     print("Delete the last item in the list")
-    words.Delete('quux')
+    words.Delete('Quux')
     print("size: {}".format(words.count))
     for word in words:
         print("data: {}".format(word))

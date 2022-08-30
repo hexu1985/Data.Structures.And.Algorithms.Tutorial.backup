@@ -37,7 +37,7 @@ def test():
         print("data: {}".format(number))
     
     print("Delete the last item in the list")
-    numbers.Delete(515)
+    numbers.Delete(1515)
     print("size: {}".format(numbers.count))
     for number in numbers:
         print("data: {}".format(number))
