@@ -17,7 +17,7 @@ def test():
     
     print("This list has {} elements.".format(numbers.count))
     for number in numbers:
-        print("Got this data: {}".format(number))
+        print("data: {}".format(number))
     
     if numbers.Search(627):
         print("Found 627 in the list.")
