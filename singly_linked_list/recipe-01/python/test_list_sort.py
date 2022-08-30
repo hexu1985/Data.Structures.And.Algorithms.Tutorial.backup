@@ -9,19 +9,11 @@ def test():
     words.Append('quux')
     
     print("The origin list");
-    print("size: {}".format(words.count))
     for word in words:
         print("data: {}".format(word))
 
-    print("Delete the last item in the list")
-    words.Delete('quux')
-    print("size: {}".format(words.count))
-    for word in words:
-        print("data: {}".format(word))
-
-    print("append another item")
-    words.Append('Quux')
-    print("size: {}".format(words.count))
+    print("Sort the list");
+    words.Sort();
     for word in words:
         print("data: {}".format(word))
 

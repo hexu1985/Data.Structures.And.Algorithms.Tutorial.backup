@@ -1,8 +1,6 @@
 from singly_linked_list import SinglyLinkedList
 
 def test():
-    print("----------------------------test---------------------------");
-
     words = SinglyLinkedList()
     words.Append('foo')
     words.Append('bar')
@@ -44,47 +42,5 @@ def test():
     for word in words:
         print("data: {}".format(word))
 
-def test_reverse():
-    print("----------------------------test_reverse---------------------------");
-
-    words = SinglyLinkedList()
-    words.Append('foo')
-    words.Append('bar')
-    words.Append('bim')
-    words.Append('baz')
-    words.Append('quux')
-    
-    print("The origin list");
-    for word in words:
-        print("data: {}".format(word))
-
-    print("Reverse the list");
-    words.Reverse();
-    for word in words:
-        print("data: {}".format(word))
-
-def test_sort():
-    print("----------------------------test_sort---------------------------");
-
-    words = SinglyLinkedList()
-    words.Append('foo')
-    words.Append('bar')
-    words.Append('bim')
-    words.Append('baz')
-    words.Append('quux')
-    
-    print("The origin list");
-    for word in words:
-        print("data: {}".format(word))
-
-    print("Sort the list");
-    words.Sort();
-    for word in words:
-        print("data: {}".format(word))
-
-def main():
+if __name__ == "__main__":
     test()
-    test_reverse()
-    test_sort()
-
-main()

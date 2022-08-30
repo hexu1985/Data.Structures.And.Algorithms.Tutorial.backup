@@ -1,8 +1,6 @@
 from singly_linked_list import SinglyLinkedList
 
 def test():
-    print("----------------------------test---------------------------");
-
     numbers = SinglyLinkedList()
     numbers.Append(627)
     numbers.Append(758)
@@ -44,47 +42,5 @@ def test():
     for number in numbers:
         print("data: {}".format(number))
 
-def test_reverse():
-    print("----------------------------test_reverse---------------------------");
-
-    numbers = SinglyLinkedList()
-    numbers.Append(627)
-    numbers.Append(758)
-    numbers.Append(113)
-    numbers.Append(101)
-    numbers.Append(515)
-    
-    print("The origin list");
-    for number in numbers:
-        print("data: {}".format(number))
-
-    print("Reverse the list");
-    numbers.Reverse();
-    for number in numbers:
-        print("data: {}".format(number))
-
-def test_sort():
-    print("----------------------------test_sort---------------------------");
-
-    numbers = SinglyLinkedList()
-    numbers.Append(627)
-    numbers.Append(758)
-    numbers.Append(113)
-    numbers.Append(101)
-    numbers.Append(515)
-    
-    print("The origin list");
-    for number in numbers:
-        print("data: {}".format(number))
-
-    print("Sort the list");
-    numbers.Sort();
-    for number in numbers:
-        print("data: {}".format(number))
-
-def main():
+if __name__ == "__main__":
     test()
-    test_reverse()
-    test_sort()
-
-main()
