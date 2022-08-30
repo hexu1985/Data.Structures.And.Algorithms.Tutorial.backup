@@ -1,6 +1,6 @@
 #include "singly_linked_list.hpp"
-#include <iostream>
 #include <string>
+#include <iostream>
 
 void test() {
     SinglyLinkedList<std::string> words;
@@ -11,19 +11,11 @@ void test() {
     words.Append("quux");
 
     std::cout << "The origin list" << '\n';
-    std::cout << "size: " << words.Count() << '\n';
     for (const auto& word : words)
         std::cout << "data: " << word << '\n';
 
-    std::cout << "Delete the last item in the list" << '\n';
-    words.Delete("quux");
-    std::cout << "size: " << words.Count() << '\n';
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
-
-    std::cout << "append another item" << '\n';
-    words.Append("Quux");
-    std::cout << "size: " << words.Count() << '\n';
+    std::cout << "Sort the list" << '\n';
+    words.Sort();
     for (const auto& word : words)
         std::cout << "data: " << word << '\n';
 }

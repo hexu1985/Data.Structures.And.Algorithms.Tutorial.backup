@@ -2,10 +2,7 @@
 #include <string>
 #include <iostream>
 
-void test()
-{
-    std::cout << "----------------------------" << __func__ << "---------------------------\n";
-
+void test() {
     SinglyLinkedList<std::string> words;
     words.Append("foo");
     words.Append("bar");
@@ -48,53 +45,9 @@ void test()
         std::cout << "data: " << word << '\n';
 }
 
-void test_reverse()
-{
-    std::cout << "----------------------------" << __func__ << "---------------------------\n";
-
-    SinglyLinkedList<std::string> words;
-    words.Append("foo");
-    words.Append("bar");
-    words.Append("bim");
-    words.Append("baz");
-    words.Append("quux");
-
-    std::cout << "The origin list" << '\n';
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
-
-    std::cout << "Reverse the list" << '\n';
-    words.Reverse();
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
-}
-
-void test_sort()
-{
-    std::cout << "----------------------------" << __func__ << "---------------------------\n";
-
-    SinglyLinkedList<std::string> words;
-    words.Append("foo");
-    words.Append("bar");
-    words.Append("bim");
-    words.Append("baz");
-    words.Append("quux");
-
-    std::cout << "The origin list" << '\n';
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
-
-    std::cout << "Sort the list" << '\n';
-    words.Sort();
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
-}
-
 int main()
 {
     test();
-    test_reverse();
-    test_sort();
     return 0;
 }
 
