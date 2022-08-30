@@ -19,7 +19,7 @@ void test() {
 
     std::cout << "This list has " << words.Count() << " elements." << '\n';
     for (const auto& word : words)
-        std::cout << "Got this data: " << word << '\n';
+        std::cout << "data: " << word << '\n';
     
     if (words.Search("foo"))
         std::cout << "Found foo in the list." << '\n';
@@ -39,7 +39,7 @@ void test() {
         std::cout << "data: " << word << '\n';
     
     std::cout << "Delete the last item in the list" << '\n';
-    words.Delete("quux");
+    words.Delete("Quux");
     std::cout << "size: " << words.Count() << '\n';
     for (const auto& word : words)
         std::cout << "data: " << word << '\n';

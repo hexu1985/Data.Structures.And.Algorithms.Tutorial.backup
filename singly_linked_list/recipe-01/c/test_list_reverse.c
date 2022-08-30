@@ -16,17 +16,10 @@ void test()
     ListAppend(words, "quux");
 
     printf("The origin list\n");
-    printf("size: %d\n", ListCount(words));
     ListTravel(words, &print);
 
-    printf("Delete the last item in the list\n");
-    ListDelete(words, "quux");
-    printf("size: %d\n", ListCount(words));
-    ListTravel(words, &print);
-
-    printf("append another item\n");
-    ListAppend(words, "Quux");
-    printf("size: %d\n", ListCount(words));
+    printf("Reverse the list\n");
+    ListReverse(words);
     ListTravel(words, &print);
 
     FreeList(words);
@@ -40,5 +33,3 @@ int main()
 
     return 0;
 }
-
-

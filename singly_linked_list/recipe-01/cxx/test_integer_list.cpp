@@ -18,7 +18,7 @@ void test() {
 
     std::cout << "This list has " << numbers.Count() << " elements." << '\n';
     for (const auto& number : numbers)
-        std::cout << "Got this data: " << number << '\n';
+        std::cout << "data: " << number << '\n';
     
     if (numbers.Search(627))
         std::cout << "Found 627 in the list." << '\n';
@@ -38,7 +38,7 @@ void test() {
         std::cout << "data: " << number << '\n';
     
     std::cout << "Delete the last item in the list" << '\n';
-    numbers.Delete(515);
+    numbers.Delete(1515);
     std::cout << "size: " << numbers.Count() << '\n';
     for (const auto& number : numbers)
         std::cout << "data: " << number << '\n';
