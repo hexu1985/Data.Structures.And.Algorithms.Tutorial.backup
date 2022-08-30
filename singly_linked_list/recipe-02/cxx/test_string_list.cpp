@@ -2,10 +2,7 @@
 #include <string>
 #include <iostream>
 
-void test()
-{
-    std::cout << "----------------------------" << __func__ << "---------------------------\n";
-
+void test() {
     SinglyLinkedList<std::string> words;
     words.Append("foo");
     words.Append("bar");
@@ -22,7 +19,7 @@ void test()
 
     std::cout << "This list has " << words.Count() << " elements." << '\n';
     for (const auto& word : words)
-        std::cout << "Got this data: " << word << '\n';
+        std::cout << "data: " << word << '\n';
     
     if (words.Search("foo"))
         std::cout << "Found foo in the list." << '\n';
@@ -42,50 +39,8 @@ void test()
         std::cout << "data: " << word << '\n';
     
     std::cout << "Delete the last item in the list" << '\n';
-    words.Delete("quux");
+    words.Delete("Quux");
     std::cout << "size: " << words.Count() << '\n';
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
-}
-
-void test_reverse()
-{
-    std::cout << "----------------------------" << __func__ << "---------------------------\n";
-
-    SinglyLinkedList<std::string> words;
-    words.Append("foo");
-    words.Append("bar");
-    words.Append("bim");
-    words.Append("baz");
-    words.Append("quux");
-
-    std::cout << "The origin list" << '\n';
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
-
-    std::cout << "Reverse the list" << '\n';
-    words.Reverse();
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
-}
-
-void test_sort()
-{
-    std::cout << "----------------------------" << __func__ << "---------------------------\n";
-
-    SinglyLinkedList<std::string> words;
-    words.Append("foo");
-    words.Append("bar");
-    words.Append("bim");
-    words.Append("baz");
-    words.Append("quux");
-
-    std::cout << "The origin list" << '\n';
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
-
-    std::cout << "Sort the list" << '\n';
-    words.Sort();
     for (const auto& word : words)
         std::cout << "data: " << word << '\n';
 }
@@ -93,8 +48,6 @@ void test_sort()
 int main()
 {
     test();
-    test_reverse();
-    test_sort();
     return 0;
 }
 

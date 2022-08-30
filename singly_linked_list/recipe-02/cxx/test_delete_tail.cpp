@@ -2,9 +2,7 @@
 #include <iostream>
 #include <string>
 
-void test_delete_tail() {
-    std::cout << "----------------------------" << __func__ << "---------------------------\n";
-
+void test() {
     SinglyLinkedList<std::string> words;
     words.Append("foo");
     words.Append("bar");
@@ -32,7 +30,7 @@ void test_delete_tail() {
 
 int main()
 {
-    test_delete_tail();
+    test();
     return 0;
 }
 

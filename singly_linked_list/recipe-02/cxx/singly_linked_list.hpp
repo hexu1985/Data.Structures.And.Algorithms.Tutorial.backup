@@ -99,10 +99,10 @@ public:
                 }
                 delete current;
                 count -= 1;
-            } else {
-                prev = current;
+                return;
             }
-            current = prev->next;
+            prev = current;
+            current = current->next;
         }
     }
 
