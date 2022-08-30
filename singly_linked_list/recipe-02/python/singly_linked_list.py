@@ -70,27 +70,30 @@ class SinglyLinkedList:
 
     def Reverse(self):
         """ Reverse the links of the list """
-        current = self.head
-        prev = None
-        while current:
+        current = self.head.next    # 指向头Node: current可能为空
+        self.head.next = None       # 重置list头
+        self.tail = current if current else self.head   # 记录list尾
+        while current:              # 遍历list
             next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
 
-        # swap head and tail
-        self.head, self.tail = self.tail, self.head
+            # 在list表头插入Node
+            current.next = self.head.next;
+            self.head.next = current;
+
+            current = next;
 
     def Sort(self):
         """ Sort the list """
-        output_list = SinglyLinkedList()
-        current = self.head
-        while current:
+        current = self.head.next    # 指向头Node: current可能为空
+        self.head.next = None       # 重置list头
+        self.tail = self.head;      # 重置list尾
+
+        while current:              # 遍历list
             next = current.next
 
             # insert the node into output_list and keep sorted
-            output_current = output_list.head 
-            output_prev = output_list.head
+            output_current = self.head.next
+            output_prev = self.head
             while output_current:
                 if current.data < output_current.data:
                     break
@@ -98,16 +101,9 @@ class SinglyLinkedList:
                 output_current = output_current.next
 
             current.next = output_current
-            if output_current == output_list.head:
-                output_list.head = current
-            else:
-                output_prev.next = current
-
+            output_prev.next = current
             if current.next is None:
-                output_list.tail = current
+                self.tail = current
 
             current = next
-
-        self.head = output_list.head
-        self.tail = output_list.tail
 
