@@ -101,10 +101,10 @@ public:
                 }
                 delete current;
                 count -= 1;
-            } else {
-                prev = current;
-            }
-            current = prev->next;
+                return;
+            } 
+            prev = current;
+            current = current->next;
         }
     }
 

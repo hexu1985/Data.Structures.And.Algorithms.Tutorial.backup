@@ -103,10 +103,10 @@ static void ListDelete(SinglyLinkedList* list, ItemType data) {
             }
             FreeNode(current);
             list->count -= 1;
-        } else {
-            prev = current;
-        }
-        current = prev->next;
+            return;
+        } 
+        prev = current;
+        current = current->next;
     }
 }
 
