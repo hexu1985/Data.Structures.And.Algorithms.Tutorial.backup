@@ -49,25 +49,27 @@ typedef struct SinglyLinkedList {
 // """ Create an empty list. """
 static SinglyLinkedList* NewList() {
     SinglyLinkedList* list = malloc(sizeof(struct SinglyLinkedList));
-    list->head = NULL;
-    list->tail = NULL;
+    list->head = malloc(sizeof(struct Node));
+    list->head->next = NULL;
+    list->tail = list->head;
     list->count = 0;
     return list;
 }
 
 static void FreeList(SinglyLinkedList* list) {
-    Node* current = list->head;
+    Node* current = list->head->next;
     while (current) {
         Node* node = current;
         current = current->next;
         FreeNode(node);
     }
+    free(list->head);
     free(list);
 }
 
 // """ Iterate through the list. """
 static void ListTravel(SinglyLinkedList* list, void (*VisitItem)(ItemType)) {
-    Node* current = list->head;
+    Node* current = list->head->next;
     while (current) {
         VisitItem(current->data);
         current = current->next;
@@ -77,29 +79,20 @@ static void ListTravel(SinglyLinkedList* list, void (*VisitItem)(ItemType)) {
 // """ Append an item to the list """
 static void ListAppend(SinglyLinkedList* list, ItemType data) {
     Node* node = NewNode(data);
-    if (list->tail) {
-        list->tail->next = node;
-        list->tail = node;
-    } else {
-        list->head = node;
-        list->tail = node;
-    }
+    list->tail->next = node;
+    list->tail = node;
     list->count += 1;
 }
 
 // """ Delete a node from the list """
 static void ListDelete(SinglyLinkedList* list, ItemType data) {
-    Node* current = list->head;
+    Node* current = list->head->next;
     Node* prev = list->head;
     while (current) {
         if (ItemEqual(current->data, data)) {
-            if (current == list->head) {
-                list->head = current->next;
-            } else {
-                prev->next = current->next;
-            }
+            prev->next = current->next;
             if (current == list->tail) {
-                list->tail = list->head ? prev : NULL;
+                list->tail = prev;
             }
             FreeNode(current);
             list->count -= 1;
@@ -113,7 +106,7 @@ static void ListDelete(SinglyLinkedList* list, ItemType data) {
 // """ Search through the list. Return True if data is found, otherwise
 // False. """
 static bool ListSearch(SinglyLinkedList* list, ItemType data) {
-    Node* current = list->head;
+    Node* current = list->head->next;
     while (current) {
         if (ItemEqual(current->data, data)) {
             return true;
@@ -129,7 +122,7 @@ static ItemType ListGetItem(SinglyLinkedList* list, int index) {
         exit(1);
     }
 
-    Node* current = list->head;
+    Node* current = list->head->next;
     for (int n = 0; n < index; n++) {
         current = current->next;
     }
@@ -142,7 +135,7 @@ static void ListSetItem(SinglyLinkedList* list, int index, ItemType data) {
         exit(1);
     }
 
-    Node* current = list->head;
+    Node* current = list->head->next;
     for (int n = 0; n < index; n++) {
         current = current->next;
     }
@@ -155,34 +148,32 @@ static int ListCount(SinglyLinkedList* list) {
 
 // """ Reverse the links of the list """
 static void ListReverse(SinglyLinkedList* list) {
-    Node* next;
-    Node* current = list->head;
-    Node* prev = NULL;
-    while (current) {
-        next = current->next;
-        current->next = prev;
-        prev = current;
+    Node* current = list->head->next;   // 指向头Node: current可能为空
+    list->head->next = NULL;                        // 重置list头
+    list->tail = current ? current : list->head;    // 记录list尾
+    while (current) {                   // 遍历list
+        Node* next = current->next;
+
+        // 在list表头插入Node
+        current->next = list->head->next;
+        list->head->next = current;
+
         current = next;
     }
-    // swap head and tail
-    Node* tmp = list->head;
-    list->head = list->tail;
-    list->tail = tmp;
 }
 
 // """ Sort the list """
 void ListSort(SinglyLinkedList* list) {
-    SinglyLinkedList output_list;
-    output_list.head = NULL;
-    output_list.tail = NULL;
+    Node* current = list->head->next;   // 指向头Node: current可能为空
+    list->head->next = NULL;            // 重置list头
+    list->tail = list->head;            // 重置list尾
 
-    Node* current = list->head;
-    while (current) {
+    while (current) {                   // 遍历list
         Node* next = current->next;
 
         // insert the node into output_list and keep sorted
-        Node* output_current = output_list.head;
-        Node* output_prev = output_list.head;
+        Node* output_current = list->head->next;
+        Node* output_prev = list->head;
         while (output_current) {
             if (ItemLess(current->data, output_current->data))
                 break;
@@ -190,20 +181,13 @@ void ListSort(SinglyLinkedList* list) {
             output_current = output_current->next;
         }
         current->next = output_current;
-        if (output_current == output_list.head) {
-            output_list.head = current;
-        } else {
-            output_prev->next = current;
-        }
-        if (current->next == NULL) {
-            output_list.tail = current;
+        output_prev->next = current;
+        if (current->next == NULL) {    // 更新list尾
+            list->tail = current;
         }
 
         current = next;
     }
-
-    list->head = output_list.head;
-    list->tail = output_list.tail;
 }
 
 

@@ -102,7 +102,7 @@ class SinglyLinkedList:
 
             current.next = output_current
             output_prev.next = current
-            if current.next is None:
+            if current.next is None:    # 更新list尾
                 self.tail = current
 
             current = next

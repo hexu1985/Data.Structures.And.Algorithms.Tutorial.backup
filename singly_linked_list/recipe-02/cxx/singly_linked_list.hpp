@@ -168,7 +168,7 @@ public:
             }
             current->next = output_current;
             output_prev->next = current;
-            if (current->next == nullptr) { // 更新
+            if (current->next == nullptr) { // 更新list尾
                 tail = current;
             }
 
