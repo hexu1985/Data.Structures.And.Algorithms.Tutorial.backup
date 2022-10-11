@@ -24,20 +24,20 @@ def test():
     if numbers.Search(838):
         print("Found 838 in the list.")
     
-    print("Now we try to Delete an item")
+    print("Now we try to delete an item")
     numbers.Delete(113)
     print("List now has {} elements".format(numbers.count))
     for number in numbers:
         print("data: {}".format(number))
     
-    print("Delete the first item in the list")
+    print("delete the first item in the list")
     numbers.Delete(627)
     print("size: {}".format(numbers.count))
     for number in numbers:
         print("data: {}".format(number))
     
-    print("Delete the last item in the list")
-    numbers.Delete(1515)
+    print("delete the last item in the list")
+    numbers.Delete(515)
     print("size: {}".format(numbers.count))
     for number in numbers:
         print("data: {}".format(number))

@@ -1,3 +1,30 @@
+access by index
+here is a node: bar
+modify by index
+Modified node by index: Quux
+This list has 5 elements.
+Got this data: foo
+Got this data: bar
+Got this data: bim
+Got this data: baz
+Got this data: Quux
+Found foo in the list.
+Now we try to delete an item
+List now has 4 elements
+data: foo
+data: bar
+data: baz
+data: Quux
+delete the first item in the list
+size: 3
+data: bar
+data: baz
+data: Quux
+delete the last item in the list
+size: 3
+data: bar
+data: baz
+data: Quux
 The origin list
 size: 5
 data: foo
@@ -29,21 +56,22 @@ data: 113
 data: 101
 data: 1515
 Found 627 in the list.
-Now we try to Delete an item
+Now we try to delete an item
 List now has 4 elements
 data: 627
 data: 758
 data: 101
 data: 1515
-Delete the first item in the list
+delete the first item in the list
 size: 3
 data: 758
 data: 101
 data: 1515
-Delete the last item in the list
-size: 2
+delete the last item in the list
+size: 3
 data: 758
 data: 101
+data: 1515
 The origin list
 data: foo
 data: bar
@@ -68,29 +96,3 @@ data: baz
 data: bim
 data: foo
 data: quux
-access by index
-here is a node: bar
-modify by index
-Modified node by index: Quux
-This list has 5 elements.
-data: foo
-data: bar
-data: bim
-data: baz
-data: Quux
-Found foo in the list.
-Now we try to Delete an item
-List now has 4 elements
-data: foo
-data: bar
-data: baz
-data: Quux
-Delete the first item in the list
-size: 3
-data: bar
-data: baz
-data: Quux
-Delete the last item in the list
-size: 2
-data: bar
-data: baz

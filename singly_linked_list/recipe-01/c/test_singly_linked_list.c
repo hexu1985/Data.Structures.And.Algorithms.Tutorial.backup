@@ -1,9 +1,11 @@
 #include "string_list.h"
 #include <stdio.h>
 
+const char* prefix = "";
+
 void print(ItemType data) 
 {
-    printf("data: %s\n", data);
+    printf("%sdata: %s\n", prefix, data);
 }
 
 void test()
@@ -23,25 +25,27 @@ void test()
     printf("Modified node by index: %s\n", ListGetItem(words, 4));
 
     printf("This list has %d elements.\n", ListCount(words));
+    prefix = "Got this ";
     ListTravel(words, &print);
+    prefix = "";
 
     if (ListSearch(words, "foo"))
         printf("Found foo in the list.\n");
     if (ListSearch(words, "amiga"))
         printf("Found amiga in the list.\n");
     
-    printf("Now we try to Delete an item\n");
+    printf("Now we try to delete an item\n");
     ListDelete(words, "bim");
     printf("List now has %d elements\n", ListCount(words));
     ListTravel(words, &print);
     
-    printf("Delete the first item in the list\n");
+    printf("delete the first item in the list\n");
     ListDelete(words, "foo");
     printf("size: %d\n", ListCount(words));
     ListTravel(words, &print);
     
-    printf("Delete the last item in the list\n");
-    ListDelete(words, "Quux");
+    printf("delete the last item in the list\n");
+    ListDelete(words, "quux");
     printf("size: %d\n", ListCount(words));
     ListTravel(words, &print);
 
