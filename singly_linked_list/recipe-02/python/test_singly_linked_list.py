@@ -1,4 +1,3 @@
-import pdb
 from singly_linked_list import SinglyLinkedList
 
 def test():
@@ -18,27 +17,27 @@ def test():
     
     print("This list has {} elements.".format(words.count))
     for word in words:
-        print("data: {}".format(word))
+        print("Got this data: {}".format(word))
     
     if words.Search('foo'):
         print("Found foo in the list.")
     if words.Search('amiga'):
         print("Found amiga in the list.")
     
-    print("Now we try to Delete an item")
+    print("Now we try to delete an item")
     words.Delete('bim')
     print("List now has {} elements".format(words.count))
     for word in words:
         print("data: {}".format(word))
     
-    print("Delete the first item in the list")
+    print("delete the first item in the list")
     words.Delete('foo')
     print("size: {}".format(words.count))
     for word in words:
         print("data: {}".format(word))
     
-    print("Delete the last item in the list")
-    words.Delete('Quux')
+    print("delete the last item in the list")
+    words.Delete('quux')
     print("size: {}".format(words.count))
     for word in words:
         print("data: {}".format(word))

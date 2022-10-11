@@ -29,18 +29,18 @@ void test()
     if (ListSearch(numbers, 838))
         printf("Found 838 in the list.\n");
     
-    printf("Now we try to Delete an item\n");
+    printf("Now we try to delete an item\n");
     ListDelete(numbers, 113);
     printf("List now has %d elements\n", ListCount(numbers));
     ListTravel(numbers, &print);
     
-    printf("Delete the first item in the list\n");
+    printf("delete the first item in the list\n");
     ListDelete(numbers, 627);
     printf("size: %d\n", ListCount(numbers));
     ListTravel(numbers, &print);
     
-    printf("Delete the last item in the list\n");
-    ListDelete(numbers, 1515);
+    printf("delete the last item in the list\n");
+    ListDelete(numbers, 515);
     printf("size: %d\n", ListCount(numbers));
     ListTravel(numbers, &print);
 

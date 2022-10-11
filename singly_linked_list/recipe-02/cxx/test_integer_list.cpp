@@ -25,20 +25,20 @@ void test() {
     if (numbers.Search(838))
         std::cout << "Found 838 in the list." << '\n';
     
-    std::cout << "Now we try to Delete an item" << '\n';
+    std::cout << "Now we try to delete an item" << '\n';
     numbers.Delete(113);
     std::cout << "List now has " << numbers.Count() << " elements" << '\n';
     for (const auto& number : numbers)
         std::cout << "data: " << number << '\n';
 
-    std::cout << "Delete the first item in the list" << '\n';
+    std::cout << "delete the first item in the list" << '\n';
     numbers.Delete(627);
     std::cout << "size: " << numbers.Count() << '\n';
     for (const auto& number : numbers)
         std::cout << "data: " << number << '\n';
     
-    std::cout << "Delete the last item in the list" << '\n';
-    numbers.Delete(1515);
+    std::cout << "delete the last item in the list" << '\n';
+    numbers.Delete(515);
     std::cout << "size: " << numbers.Count() << '\n';
     for (const auto& number : numbers)
         std::cout << "data: " << number << '\n';
