@@ -72,27 +72,7 @@ size: 3
 data: 758
 data: 101
 data: 1515
-The origin list
-data: foo
-data: bar
-data: bim
-data: baz
-data: quux
-Reverse the list
-data: quux
-data: baz
-data: bim
-data: bar
-data: foo
-The origin list
-data: foo
-data: bar
-data: bim
-data: baz
-data: quux
-Sort the list
-data: bar
-data: baz
-data: bim
-data: foo
-data: quux
+2 3 4 5 6 7 8 9 10 
+10 9 8 7 6 5 4 3 2 
+783 642 377 195 485 592 155 966 921 
+155 195 377 485 592 642 783 921 966 

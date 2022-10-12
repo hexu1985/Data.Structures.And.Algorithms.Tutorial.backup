@@ -1,23 +1,26 @@
 #include "singly_linked_list.hpp"
 #include <string>
 #include <iostream>
+#include <random>
+
+const int N = 10;
 
 void test() {
-    SinglyLinkedList<std::string> words;
-    words.Append("foo");
-    words.Append("bar");
-    words.Append("bim");
-    words.Append("baz");
-    words.Append("quux");
+    SinglyLinkedList<int> numbers;
 
-    std::cout << "The origin list" << '\n';
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
+    std::default_random_engine generator;
+    std::uniform_int_distribution<int> distribution(0, 999);
+    for (int i = 0; i < N-1; i++) {
+        numbers.Append(distribution(generator));
+    }
 
-    std::cout << "Sort the list" << '\n';
-    words.Sort();
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
+    for (auto number : numbers) std::cout << number << ' ';
+    std::cout << std::endl;
+
+    numbers.Sort();
+
+    for (auto number : numbers) std::cout << number << ' ';
+    std::cout << std::endl;
 }
 
 int main()
@@ -25,4 +28,5 @@ int main()
     test();
     return 0;
 }
+
 

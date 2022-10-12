@@ -1,21 +1,23 @@
+import random
+
 from singly_linked_list import SinglyLinkedList
 
-def test():
-    words = SinglyLinkedList()
-    words.Append('foo')
-    words.Append('bar')
-    words.Append('bim')
-    words.Append('baz')
-    words.Append('quux')
-    
-    print("The origin list");
-    for word in words:
-        print("data: {}".format(word))
+N = 10
 
-    print("Sort the list");
-    words.Sort();
-    for word in words:
-        print("data: {}".format(word))
+def test():
+    numbers = SinglyLinkedList()
+    for i in range(0, N-1):
+        numbers.Append(random.randint(0,999))
+
+    for number in numbers:
+        print(number, end=" ")
+    print()
+
+    numbers.Sort();
+
+    for number in numbers:
+        print(number, end=" ")
+    print()
 
 if __name__ == "__main__":
     test()

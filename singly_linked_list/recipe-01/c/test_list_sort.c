@@ -1,28 +1,30 @@
-#include "string_list.h"
+#include "integer_list.h"
 #include <stdio.h>
+#include <stdlib.h>
+
+#define N 10
 
 void print(ItemType data) 
 {
-    printf("data: %s\n", data);
+    printf("%d ", data);
 }
 
 void test()
 {
-    SinglyLinkedList* words = NewList();
-    ListAppend(words, "foo");
-    ListAppend(words, "bar");
-    ListAppend(words, "bim");
-    ListAppend(words, "baz");
-    ListAppend(words, "quux");
+    SinglyLinkedList* numbers = NewList();
+    for (int i = 0; i < N-1; i++) {
+        ListAppend(numbers, rand() % 1000);
+    }
 
-    printf("The origin list\n");
-    ListTravel(words, &print);
+    ListTravel(numbers, &print);
+    printf("\n");
 
-    printf("Sort the list\n");
-    ListSort(words);
-    ListTravel(words, &print);
+    ListSort(numbers);
 
-    FreeList(words);
+    ListTravel(numbers, &print);
+    printf("\n");
+
+    FreeList(numbers);
 }
 
 int main()

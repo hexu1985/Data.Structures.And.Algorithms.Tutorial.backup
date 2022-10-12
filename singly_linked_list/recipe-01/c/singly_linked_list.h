@@ -171,6 +171,7 @@ static void ListReverse(SinglyLinkedList* list) {
 }
 
 // """ Sort the list """
+// insertion sort
 void ListSort(SinglyLinkedList* list) {
     SinglyLinkedList output_list;
     output_list.head = NULL;

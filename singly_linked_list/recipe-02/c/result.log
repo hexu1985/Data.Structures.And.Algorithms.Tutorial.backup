@@ -72,27 +72,7 @@ size: 3
 data: 758
 data: 101
 data: 1515
-The origin list
-data: foo
-data: bar
-data: bim
-data: baz
-data: quux
-Reverse the list
-data: quux
-data: baz
-data: bim
-data: bar
-data: foo
-The origin list
-data: foo
-data: bar
-data: bim
-data: baz
-data: quux
-Sort the list
-data: bar
-data: baz
-data: bim
-data: foo
-data: quux
+2 3 4 5 6 7 8 9 10 
+10 9 8 7 6 5 4 3 2 
+383 886 777 915 793 335 386 492 649 
+335 383 386 492 649 777 793 886 915 

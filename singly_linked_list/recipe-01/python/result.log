@@ -72,27 +72,7 @@ size: 3
 data: 758
 data: 101
 data: 1515
-The origin list
-data: foo
-data: bar
-data: bim
-data: baz
-data: quux
-Reverse the list
-data: quux
-data: baz
-data: bim
-data: bar
-data: foo
-The origin list
-data: foo
-data: bar
-data: bim
-data: baz
-data: quux
-Sort the list
-data: bar
-data: baz
-data: bim
-data: foo
-data: quux
+2 3 4 5 6 7 8 9 10 
+10 9 8 7 6 5 4 3 2 
+921 918 149 688 621 681 768 342 365 
+149 342 365 621 681 688 768 918 921 

@@ -150,6 +150,7 @@ public:
     }
 
     // """ Sort the list """
+    // insertion sort
     void Sort() {
         SinglyLinkedList output_list;
         auto current = head;

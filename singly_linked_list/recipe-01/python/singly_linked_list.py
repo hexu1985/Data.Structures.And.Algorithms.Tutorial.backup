@@ -90,6 +90,7 @@ class SinglyLinkedList:
 
     def Sort(self):
         """ Sort the list """
+        # insertion sort
         output_list = SinglyLinkedList()
         current = self.head
         while current:
