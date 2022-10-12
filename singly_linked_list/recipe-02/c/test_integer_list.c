@@ -1,7 +1,8 @@
 #include "integer_list.h"
 #include <stdio.h>
 
-void print(ItemType data) {
+void print(ItemType data)
+{
     printf("data: %d\n", data);
 }
 

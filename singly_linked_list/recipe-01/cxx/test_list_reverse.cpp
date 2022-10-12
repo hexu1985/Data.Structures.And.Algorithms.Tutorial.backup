@@ -2,22 +2,21 @@
 #include <string>
 #include <iostream>
 
+const int N = 10;
+
 void test() {
-    SinglyLinkedList<std::string> words;
-    words.Append("foo");
-    words.Append("bar");
-    words.Append("bim");
-    words.Append("baz");
-    words.Append("quux");
+    SinglyLinkedList<int> numbers;
+    for (int i = 2; i < N+1; i++) {
+        numbers.Append(i);
+    }
 
-    std::cout << "The origin list" << '\n';
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
+    for (auto number : numbers) std::cout << number << ' ';
+    std::cout << std::endl;
 
-    std::cout << "Reverse the list" << '\n';
-    words.Reverse();
-    for (const auto& word : words)
-        std::cout << "data: " << word << '\n';
+    numbers.Reverse();
+
+    for (auto number : numbers) std::cout << number << ' ';
+    std::cout << std::endl;
 }
 
 int main()

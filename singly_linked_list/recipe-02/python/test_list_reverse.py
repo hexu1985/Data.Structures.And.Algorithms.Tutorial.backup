@@ -1,21 +1,21 @@
 from singly_linked_list import SinglyLinkedList
 
-def test():
-    words = SinglyLinkedList()
-    words.Append('foo')
-    words.Append('bar')
-    words.Append('bim')
-    words.Append('baz')
-    words.Append('quux')
-    
-    print("The origin list");
-    for word in words:
-        print("data: {}".format(word))
+N = 10
 
-    print("Reverse the list");
-    words.Reverse();
-    for word in words:
-        print("data: {}".format(word))
+def test():
+    numbers = SinglyLinkedList()
+    for i in range(2, N+1):
+        numbers.Append(i)
+
+    for number in numbers:
+        print(number, end=" ")
+    print()
+
+    numbers.Reverse();
+
+    for number in numbers:
+        print(number, end=" ")
+    print()
 
 if __name__ == "__main__":
     test()
