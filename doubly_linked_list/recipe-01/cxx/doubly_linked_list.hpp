@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdexcept>
+#include <iostream>
 
 // """ A Doubly-linked lists' node. """
 template <typename T>
@@ -82,6 +83,12 @@ public:
     }
 
     ~DoublyLinkedList() {
+        auto current = head;
+        while (current) {
+            auto node = current;
+            current = current->next;
+            delete node;
+        }
     }
 
     DoublyLinkedList(const DoublyLinkedList&) = delete;
@@ -139,6 +146,7 @@ public:
                 } else {
                     current->next->prev = current->prev;
                 }
+                delete current;
                 count -= 1;
                 return;
             }
@@ -182,6 +190,8 @@ public:
         return current->data;
     }
 
+    int Count() { return count; }
+
     // """ Reverse linked list. """
     void Reverse() {
         using std::swap;
@@ -195,8 +205,27 @@ public:
         swap(head, tail);
     }
 
+    void PrintFoward() {
+        auto first = begin();
+        auto last = end();
+        while (first != last) {
+            std::cout << *first << '\n';
+            ++first;
+        }
+    }
+
+    void PrintBackward() {
+        auto first = rbegin();
+        auto last = rend();
+        while (first != last) {
+            std::cout << *first << '\n';
+            ++first;
+        }
+    }
+
 private:
     Node<T>* head;
     Node<T>* tail;
     int count;
 };
+
