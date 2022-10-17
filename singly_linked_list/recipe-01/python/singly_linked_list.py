@@ -15,7 +15,7 @@ class SinglyLinkedList:
     def Append(self, data):
         """ Append an item to the list """
         node = Node(data)
-        if self.tail:
+        if self.head:   # list is not empty
             self.tail.next = node
             self.tail = node
         else:

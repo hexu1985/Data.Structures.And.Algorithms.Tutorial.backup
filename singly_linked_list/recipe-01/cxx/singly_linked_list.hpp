@@ -75,7 +75,7 @@ public:
     // """ Append an item to the list """
     void Append(const T& data) {
         auto node = new Node<T>(data);
-        if (tail) {
+        if (head) { // list not empty
             tail->next = node;
             tail = node;
         } else {

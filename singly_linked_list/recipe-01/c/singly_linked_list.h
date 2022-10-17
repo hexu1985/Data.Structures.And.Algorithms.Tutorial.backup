@@ -77,7 +77,7 @@ static void ListTravel(SinglyLinkedList* list, void (*VisitItem)(ItemType)) {
 // """ Append an item to the list """
 static void ListAppend(SinglyLinkedList* list, ItemType data) {
     Node* node = NewNode(data);
-    if (list->tail) {
+    if (list->head) {   // list not empty
         list->tail->next = node;
         list->tail = node;
     } else {
