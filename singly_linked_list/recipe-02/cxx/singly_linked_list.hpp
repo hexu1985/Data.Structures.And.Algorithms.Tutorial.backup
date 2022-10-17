@@ -119,7 +119,7 @@ public:
         return false;
     }
 
-    T& operator[](int index) {
+    T& operator[] (int index) {
         if (index > count - 1) {
             throw std::out_of_range("Index out of range.");
         }
