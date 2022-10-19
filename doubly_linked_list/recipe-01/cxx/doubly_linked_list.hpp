@@ -130,21 +130,17 @@ public:
         auto current = head;
         while (current) {
             if (current->data == data) {
-                if (current == head) {
-                    head = current->next;
-                    if (head) {
-                        head->prev = nullptr;
-                    }
-                } else {
+                if (current->prev) {    // current is not head node
                     current->prev->next = current->next;
-                }
-                if (current == tail) {
-                    tail = current->prev;
-                    if (tail) {
-                        tail->next = nullptr;
-                    }
                 } else {
+                    if (current->next) current->next->prev = nullptr;
+                    head = current->next;
+                }
+                if (current->next) {    // current is not tail node
                     current->next->prev = current->prev;
+                } else {
+                    if (current->prev) current->prev->next = nullptr;
+                    tail = current->prev;
                 }
                 delete current;
                 count -= 1;

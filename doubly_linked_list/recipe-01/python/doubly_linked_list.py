@@ -1,9 +1,9 @@
-class Node(object):
+class Node:
     """ A Doubly-linked lists' node. """
-    def __init__(self, data=None, next=None, prev=None):
+    def __init__(self, data=None):
         self.data = data
-        self.next = next
-        self.prev = prev
+        self.next = None
+        self.prev = None
 
 
 class DoublyLinkedList(object):
@@ -12,18 +12,16 @@ class DoublyLinkedList(object):
         self.tail = None
         self.count = 0
 
-    def append(self, data):
+    def Append(self, data):
         """ Append an item to the list. """
-
-        new_node = Node(data, None, None)
+        node = Node(data)
         if self.head is None:
-            self.head = new_node
+            self.head = node
             self.tail = self.head
         else:
-            new_node.prev = self.tail
-            self.tail.next = new_node
-            self.tail = new_node
-
+            node.prev = self.tail
+            self.tail.next = node
+            self.tail = node
         self.count += 1
 
     def iter(self):
@@ -42,76 +40,64 @@ class DoublyLinkedList(object):
             current = current.prev
             yield val
 
-    def delete(self, data):
+    def Delete(self, data):
         """ Delete a node from the list. """
         current = self.head
-        node_deleted = False
-        if current is None:
-            node_deleted = False
-
-        elif current.data == data:
-            self.head = current.next
-            self.head.prev = None
-            node_deleted = True
-
-        elif self.tail.data == data:
-            self.tail = self.tail.prev
-            self.tail.next = None
-            node_deleted = True
-
-        else:
-            while current:
-                if current.data == data:
+        while current:
+            if current.data == data:
+                if current.prev:    # current is not head node
                     current.prev.next = current.next
+                else:
+                    self.head = current.next
+                if current.next:    # current is not tail node
                     current.next.prev = current.prev
-                    node_deleted = True
-                current = current.next
+                else:
+                    self.tail = current.prev
+                self.count -= 1
+                return
+            current = current.next
 
-        if node_deleted:
-            self.count -= 1
-
-    def search(self, data):
+    def Search(self, data):
         """Search through the list. Return True if data is found, otherwise False."""
-        for node in self.iter():
-            if data == node:
+        current = self.head
+        while current:
+            if data == current.data:
                 return True
+            current = current.next 
+
         return False
 
-    def print_foward(self):
+    def PrintFoward(self):
         """ Print nodes in list from first node inserted to the last . """
         for node in self.iter():
             print(node)
 
-    def print_backward(self):
+    def PrintBackward(self):
         """ Print nodes in list from latest to first node. """
-        current = self.tail
-        while current:
-            print(current.data)
-            current = current.prev
+        for node in self.reverse_iter():
+            print(node)
 
-    def insert_head(self, data):
+    def InsertHead(self, data):
         """ Insert new node at the head of linked list. """
+        node = Node(data)
+        if self.head:   # list not empty 
+            self.head.prev = node
+            node.next = self.head
+            self.head = node
+        else:
+            self.tail = self.head = node
+        self.count += 1
 
-        if self.head is not None:
-            new_node = Node(data, None, None)
-            new_node.next = self.head
-            self.head.prev = new_node
-            self.head = new_node
-            self.count += 1
-
-    def reverse(self):
+    def Reverse(self):
         """ Reverse linked list. """
         current = self.head
         while current:
-            temp = current.next
-            current.next = current.prev
-            current.prev = temp
+            # swap current.next and current.prev
+            current.prev, current.next = current.next, current.prev
             current = current.prev
 
         # Now reverse the order of head and tail
-        temp = self.head
-        self.head = self.tail
-        self.tail = temp
+        self.head, self.tail = self.tail, self.head
 
     def __getitem__(self, index):
         if index > self.count - 1:
