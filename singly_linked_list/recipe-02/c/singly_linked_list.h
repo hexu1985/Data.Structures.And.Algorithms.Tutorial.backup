@@ -14,6 +14,7 @@ typedef struct Node {
 static Node* DefaultNewNode(ItemType data) {
     Node* node = malloc(sizeof(Node));
     node->data = data;
+    node->next = NULL;
     return node;
 }
 

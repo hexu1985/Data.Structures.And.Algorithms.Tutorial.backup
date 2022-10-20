@@ -5,16 +5,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-// """ A singly-linked node. """
+// """ A Doubly-linked lists' node. """
 typedef struct Node {
     struct Node* next;
+    struct Node* prev;
     ItemType data;
 } Node;
 
 static Node* DefaultNewNode(ItemType data) {
     Node* node = malloc(sizeof(Node));
     node->data = data;
-    node->next = NULL;
+    node->next = node->prev = NULL;
     return node;
 }
 
@@ -40,23 +41,23 @@ bool (*ItemEqual)(ItemType, ItemType) = &DefaultItemEqual;
 void (*SetItem)(Node* node, ItemType) = &DefaultSetItem;
 bool (*ItemLess)(ItemType, ItemType) = &DefaultItemLess;
 
-// """ A singly-linked list. """
-typedef struct SinglyLinkedList {
+typedef struct DoublyLinkedList {
     Node* head;
     Node* tail;
     int count;
-} SinglyLinkedList;
+} DoublyLinkedList;
+
 
 // """ Create an empty list. """
-static SinglyLinkedList* NewList() {
-    SinglyLinkedList* list = malloc(sizeof(struct SinglyLinkedList));
+static DoublyLinkedList* NewList() {
+    DoublyLinkedList* list = malloc(sizeof(struct DoublyLinkedList));
     list->head = NULL;
     list->tail = NULL;
     list->count = 0;
     return list;
 }
 
-static void FreeList(SinglyLinkedList* list) {
+static void FreeList(DoublyLinkedList* list) {
     Node* current = list->head;
     while (current) {
         Node* node = current;
@@ -67,7 +68,7 @@ static void FreeList(SinglyLinkedList* list) {
 }
 
 // """ Iterate through the list. """
-static void ListTravel(SinglyLinkedList* list, void (*VisitItem)(ItemType)) {
+static void ListTravel(DoublyLinkedList* list, void (*VisitItem)(ItemType)) {
     Node* current = list->head;
     while (current) {
         VisitItem(current->data);
@@ -75,45 +76,55 @@ static void ListTravel(SinglyLinkedList* list, void (*VisitItem)(ItemType)) {
     }
 }
 
+// """ Iterate backwards through the list. """
+static void ListReverseTravel(DoublyLinkedList* list, void (*VisitItem)(ItemType)) {
+    Node* current = list->tail;
+    while (current) {
+        VisitItem(current->data);
+        current = current->prev;
+    }
+}
+
 // """ Append an item to the list """
-static void ListAppend(SinglyLinkedList* list, ItemType data) {
+static void ListAppend(DoublyLinkedList* list, ItemType data) {
     Node* node = NewNode(data);
     if (list->head) {   // list not empty
+        node->prev = list->tail;
         list->tail->next = node;
         list->tail = node;
     } else {
-        list->head = node;
-        list->tail = node;
+        list->tail = list->head = node;
     }
     list->count += 1;
 }
 
 // """ Delete a node from the list """
-static void ListDelete(SinglyLinkedList* list, ItemType data) {
+static void ListDelete(DoublyLinkedList* list, ItemType data) {
     Node* current = list->head;
-    Node* prev = list->head;
     while (current) {
         if (ItemEqual(current->data, data)) {
-            if (current == list->head) {
-                list->head = current->next;
+            if (current->prev) {    // current is not head node
+                current->prev->next = current->next;
             } else {
-                prev->next = current->next;
+                if (current->next) current->next->prev = NULL;
+                list->head = current->next;
             }
-            if (current == list->tail) {
-                list->tail = list->head ? prev : NULL;
+            if (current->next) {    // current is not tail node
+                current->next->prev = current->prev;
+            } else {
+                if (current->prev) current->prev->next = NULL;
+                list->tail = current->prev;
             }
             FreeNode(current);
             list->count -= 1;
             return;
-        } 
-        prev = current;
+        }
         current = current->next;
     }
 }
 
-// """ Search through the list. Return True if data is found, otherwise
-// False. """
-static bool ListSearch(SinglyLinkedList* list, ItemType data) {
+// """Search through the list. Return True if data is found, otherwise False."""
+static bool ListSearch(DoublyLinkedList* list, ItemType data) {
     Node* current = list->head;
     while (current) {
         if (ItemEqual(current->data, data)) {
@@ -124,7 +135,20 @@ static bool ListSearch(SinglyLinkedList* list, ItemType data) {
     return false;
 }
 
-static ItemType ListGetItem(SinglyLinkedList* list, int index) {
+// """ Insert new node at the head of linked list. """
+static void ListInsertHead(DoublyLinkedList* list, ItemType data) {
+    Node* node = NewNode(data);
+    if (list->head) {   // list not empty
+        list->head->prev = node;
+        node->next = list->head;
+        list->head = node;
+    } else {
+        list->tail = list->head = node;
+    }
+    list->count += 1;
+}
+
+static ItemType ListGetItem(DoublyLinkedList* list, int index) {
     if (index > list->count - 1) {
         fprintf(stderr, "Index out of range.");
         exit(1);
@@ -137,7 +161,7 @@ static ItemType ListGetItem(SinglyLinkedList* list, int index) {
     return current->data;
 }
 
-static void ListSetItem(SinglyLinkedList* list, int index, ItemType data) {
+static void ListSetItem(DoublyLinkedList* list, int index, ItemType data) {
     if (index > list->count - 1) {
         fprintf(stderr, "Index out of range.");
         exit(1);
@@ -150,62 +174,24 @@ static void ListSetItem(SinglyLinkedList* list, int index, ItemType data) {
     SetItem(current, data);
 }
 
-static int ListCount(SinglyLinkedList* list) {
+static int ListCount(DoublyLinkedList* list) {
     return list->count;
 }
 
 // """ Reverse the links of the list """
-static void ListReverse(SinglyLinkedList* list) {
-    Node* next;
+static void ListReverse(DoublyLinkedList* list) {
     Node* current = list->head;
-    Node* prev = NULL;
+    Node* tmp;
     while (current) {
-        next = current->next;
-        current->next = prev;
-        prev = current;
-        current = next;
+        tmp = current->next;
+        current->next = current->prev;
+        current->prev = tmp;
+        current = current->prev;
     }
-    // swap head and tail
-    Node* tmp = list->head;
+
+    // Now reverse the order of head and tail
+    tmp = list->head;
     list->head = list->tail;
     list->tail = tmp;
 }
-
-// """ Sort the list """
-// insertion sort
-void ListSort(SinglyLinkedList* list) {
-    SinglyLinkedList output_list;
-    output_list.head = NULL;
-    output_list.tail = NULL;
-
-    Node* current = list->head;
-    while (current) {
-        Node* next = current->next;
-
-        // insert the node into output_list and keep sorted
-        Node* output_current = output_list.head;
-        Node* output_prev = output_list.head;
-        while (output_current) {
-            if (ItemLess(current->data, output_current->data))
-                break;
-            output_prev = output_current;
-            output_current = output_current->next;
-        }
-        current->next = output_current;
-        if (output_current == output_list.head) {
-            output_list.head = current;
-        } else {
-            output_prev->next = current;
-        }
-        if (current->next == NULL) {
-            output_list.tail = current;
-        }
-
-        current = next;
-    }
-
-    list->head = output_list.head;
-    list->tail = output_list.tail;
-}
-
 
