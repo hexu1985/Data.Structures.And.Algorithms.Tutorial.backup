@@ -5,6 +5,7 @@ from singly_linked_list import SinglyLinkedList
 N = 10
 
 def test():
+    random.seed(0)
     numbers = SinglyLinkedList()
     for i in range(0, N-1):
         numbers.Append(random.randint(0,999))

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 rm -f result.log
 python3 -m test_singly_linked_list >> result.log

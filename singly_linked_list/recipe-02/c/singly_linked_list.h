@@ -42,6 +42,7 @@ bool (*ItemLess)(ItemType, ItemType) = &DefaultItemLess;
 
 // """ A singly-linked list. """
 typedef struct SinglyLinkedList {
+    Node dummy;
     Node* head;
     Node* tail;
     int count;
@@ -50,7 +51,7 @@ typedef struct SinglyLinkedList {
 // """ Create an empty list. """
 static SinglyLinkedList* NewList() {
     SinglyLinkedList* list = malloc(sizeof(struct SinglyLinkedList));
-    list->head = malloc(sizeof(struct Node));
+    list->head = &list->dummy;
     list->head->next = NULL;
     list->tail = list->head;
     list->count = 0;
@@ -64,7 +65,6 @@ static void FreeList(SinglyLinkedList* list) {
         current = current->next;
         FreeNode(node);
     }
-    free(list->head);
     free(list);
 }
 

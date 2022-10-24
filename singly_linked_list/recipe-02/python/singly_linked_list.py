@@ -8,7 +8,9 @@ class SinglyLinkedList:
     """ A singly-linked list. """
     def __init__(self):
         """ Create an empty list. """
-        self.head = Node()
+        self.dummy = Node()
+        self.head = self.dummy
+        self.head.next = None
         self.tail = self.head
         self.count = 0
 

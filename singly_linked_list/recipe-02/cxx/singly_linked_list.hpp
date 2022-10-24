@@ -52,7 +52,7 @@ class SinglyLinkedList {
 public:
     // """ Create an empty list. """
     SinglyLinkedList(): head(nullptr), tail(nullptr), count(0) {
-        head = new Node<T>();
+        head = &dummy;
         head->next = nullptr;
         tail = head;
     }
@@ -64,7 +64,6 @@ public:
             current = current->next;
             delete node;
         }
-        delete head;
     }
 
     SinglyLinkedList(const SinglyLinkedList&) = delete;
@@ -177,6 +176,7 @@ public:
     }
 
 private:
+    Node<T> dummy;
     Node<T>* head;
     Node<T>* tail;
     int count;
