@@ -16,11 +16,10 @@ std::vector<Vertex> breadth_first_search(Graph& graph, Vertex root) {
         std::sort(adj_nodes.begin(), adj_nodes.end());
 
         for (auto elem : adj_nodes) {
-            if (std::find(visited_vertices.begin(), visited_vertices.end(), elem) != visited_vertices.end()) {
-                continue;
+            if (std::find(visited_vertices.begin(), visited_vertices.end(), elem) == visited_vertices.end()) {
+                visited_vertices.push_back(elem);
+                graph_queue.push_back(elem);
             }
-            visited_vertices.push_back(elem);
-            graph_queue.push_back(elem);
         }
     }
 
