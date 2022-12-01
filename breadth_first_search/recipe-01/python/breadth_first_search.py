@@ -10,7 +10,7 @@ def breadth_first_search(graph, root):
         adj_nodes = sorted(graph[node])     # sort to ensure visiting ordered confirmed 
     
         for elem in adj_nodes:
-            if not elem in visited_vertices:
+            if elem not in visited_vertices:
                 visited_vertices.append(elem)
                 graph_queue.append(elem)
     
