@@ -5,9 +5,7 @@
 
 template <typename Graph, typename Vertex>
 void depth_first_search(Graph& graph, Vertex node, std::vector<Vertex>& visited_vertices) {
-    if (std::find(visited_vertices.begin(), visited_vertices.end(), node) == visited_vertices.end()) {
-        visited_vertices.push_back(node);
-    }
+    visited_vertices.push_back(node);
 
     auto adj_nodes = graph[node];
     std::sort(adj_nodes.begin(), adj_nodes.end());
