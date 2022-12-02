@@ -25,17 +25,14 @@ void print(std::vector<std::string> vertices) {
 
 void test() {
     Graph graph;
-    graph["A"] = {"B", "S"};
-    graph["B"] = {"A"};
-    graph["S"] = {"A","G","C"};
-    graph["D"] = {"C"};
-    graph["G"] = {"S","F","H"};
-    graph["H"] = {"G","E"};
-    graph["E"] = {"C","H"};
-    graph["F"] = {"C","G"};
-    graph["C"] = {"D","S","E","F"};
+    graph["s"] = {"a", "b"};
+    graph["a"] = {"s", "c"};
+    graph["b"] = {"s", "c", "d"};
+    graph["c"] = {"a", "b", "d", "e"};
+    graph["d"] = {"b", "c", "e"};
+    graph["e"] = {"c", "d"};
 
-    print(depth_first_search(graph, std::string("A")));
+    print(depth_first_search(graph, std::string("s")));
 }
 
 int main() {
