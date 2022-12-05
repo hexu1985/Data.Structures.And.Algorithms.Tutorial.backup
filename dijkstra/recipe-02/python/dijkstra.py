@@ -25,10 +25,10 @@ def get_shortest_unincluded_vertex(table, included_vertices):
             min_vertex = node 
     return min_vertex 
 
-def create_shortest_distacne_table(graph, orgin):
+def create_shortest_distacne_table(graph, origin):
     table = dict()
     for vertex in graph.keys():
-        if vertex == orgin:
+        if vertex == origin:
             table[vertex] = [0, None]
         else:
             table[vertex] = [float('inf'), None]
