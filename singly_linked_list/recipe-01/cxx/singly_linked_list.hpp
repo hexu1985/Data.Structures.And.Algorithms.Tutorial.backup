@@ -88,7 +88,7 @@ public:
     // """ Delete a node from the list """
     void Delete(const T& data) {
         auto current = head;
-        auto prev = head;
+        Node<T>* prev = nullptr;
         while (current) {
             if (current->data == data) {
                 if (current == head) {
@@ -97,7 +97,7 @@ public:
                     prev->next = current->next;
                 }
                 if (current == tail) {
-                    tail = head ? prev : nullptr;
+                    tail = prev; 
                 }
                 delete current;
                 count -= 1;

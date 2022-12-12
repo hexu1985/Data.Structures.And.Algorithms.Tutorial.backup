@@ -34,7 +34,7 @@ class SinglyLinkedList:
     def Delete(self, data):
         """ Delete a node from the list """
         current = self.head
-        prev = self.head
+        prev = None
         while current:
             if current.data == data:
                 if current == self.head:
@@ -42,7 +42,7 @@ class SinglyLinkedList:
                 else:
                     prev.next = current.next
                 if current == self.tail:
-                    self.tail = prev if self.head else None
+                    self.tail = prev
                 self.count -= 1
                 return
             prev = current

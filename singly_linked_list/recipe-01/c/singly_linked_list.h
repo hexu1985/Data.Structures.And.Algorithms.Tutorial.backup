@@ -91,7 +91,7 @@ static void ListAppend(SinglyLinkedList* list, ItemType data) {
 // """ Delete a node from the list """
 static void ListDelete(SinglyLinkedList* list, ItemType data) {
     Node* current = list->head;
-    Node* prev = list->head;
+    Node* prev = NULL;
     while (current) {
         if (ItemEqual(current->data, data)) {
             if (current == list->head) {
@@ -100,7 +100,7 @@ static void ListDelete(SinglyLinkedList* list, ItemType data) {
                 prev->next = current->next;
             }
             if (current == list->tail) {
-                list->tail = list->head ? prev : NULL;
+                list->tail = prev;
             }
             FreeNode(current);
             list->count -= 1;

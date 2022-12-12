@@ -6,6 +6,7 @@ N = 10
 
 def test():
     numbers = SinglyLinkedList()
+    random.seed(0)
     for i in range(0, N-1):
         numbers.Append(random.randint(0,999))
 
