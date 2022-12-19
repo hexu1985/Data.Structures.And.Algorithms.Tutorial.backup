@@ -39,7 +39,7 @@ def initialize_shortest_distacne_table(graph, table, origin):
     return table
 
 def find_shortest_path(graph, table, origin): 
-    included_vertices = list()
+    included_vertices = [origin]
     initialize_shortest_distacne_table(graph, table, origin)
     while len(included_vertices) < len(table.keys()):
         current_node = get_shortest_unincluded_vertex(table, included_vertices)
