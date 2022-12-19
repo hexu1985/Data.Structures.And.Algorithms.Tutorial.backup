@@ -39,9 +39,10 @@ class SinglyLinkedList:
                 if current == self.tail:
                     self.tail = prev
                 self.count -= 1
-                return
+                return True
             prev = current
             current = current.next
+        return False
 
     def Search(self, data):
         """ Search through the list. Return True if data is found, otherwise
