@@ -89,7 +89,7 @@ static void ListAppend(SinglyLinkedList* list, ItemType data) {
 }
 
 // """ Delete a node from the list """
-static void ListDelete(SinglyLinkedList* list, ItemType data) {
+static bool ListDelete(SinglyLinkedList* list, ItemType data) {
     Node* current = list->head;
     Node* prev = NULL;
     while (current) {
@@ -104,11 +104,12 @@ static void ListDelete(SinglyLinkedList* list, ItemType data) {
             }
             FreeNode(current);
             list->count -= 1;
-            return;
+            return true;
         } 
         prev = current;
         current = current->next;
     }
+    return false;
 }
 
 // """ Search through the list. Return True if data is found, otherwise
