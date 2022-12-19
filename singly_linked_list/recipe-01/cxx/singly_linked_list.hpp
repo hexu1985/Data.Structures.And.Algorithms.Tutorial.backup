@@ -17,26 +17,26 @@ struct Iterator {
     Iterator(Node<T>* node): current(node) {
     }
 
-    T& operator* () { return current->data; }
+    T& operator*() { return current->data; }
 
-    T* operator-> () { return &current->data; }
+    T* operator->() { return &current->data; }
 
-    Iterator& operator++ () {
+    Iterator& operator++() {
         current = current->next;
         return *this;
     }
 
-    Iterator operator++ (int) {
+    Iterator operator++(int) {
         Iterator tmp(*this);
         current = current->next;
         return tmp;
     }
 
-    bool operator== (const Iterator& other) const {   
+    bool operator==(const Iterator& other) const {
         return (this->current == other.current);
     }
 
-    bool operator!= (const Iterator& other) const {
+    bool operator!=(const Iterator& other) const {
         return !(*this == other);
     }
 
@@ -86,7 +86,7 @@ public:
     }
 
     // """ Delete a node from the list """
-    void Delete(const T& data) {
+    bool Delete(const T& data) {
         auto current = head;
         Node<T>* prev = nullptr;
         while (current) {
@@ -101,11 +101,12 @@ public:
                 }
                 delete current;
                 count -= 1;
-                return;
+                return true;
             } 
             prev = current;
             current = current->next;
         }
+        return false;
     }
 
     // """ Search through the list. Return True if data is found, otherwise
