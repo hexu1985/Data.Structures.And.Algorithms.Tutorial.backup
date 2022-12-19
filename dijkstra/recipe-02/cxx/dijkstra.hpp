@@ -5,6 +5,7 @@
 #include <map>
 #include <vector>
 #include <tuple>
+#include <type_traits>
 
 #define DISTANCE 0 
 #define PREVIOUS 1 
@@ -74,6 +75,11 @@ Vertex get_shortest_unincluded_vertex(Table& table, const std::set<Vertex>& incl
 
 template <typename Graph, typename Table, typename Vertex>
 void initialize_distacne_table(Graph& graph, Table& table, Vertex origin) {
+    // check distance type is floating point
+    using RecordType = typename std::decay<decltype(table[origin])>::type;
+    using DistanceType = typename std::tuple_element<DISTANCE, RecordType>::type;
+    static_assert(std::is_floating_point<DistanceType>::value, "distance type must be floating point");
+
     for (const auto& vertex : keys(graph)) {
         if (vertex == origin) {
             table[vertex] = {0, {}};
