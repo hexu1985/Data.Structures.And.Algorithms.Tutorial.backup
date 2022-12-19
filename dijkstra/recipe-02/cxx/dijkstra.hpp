@@ -76,11 +76,11 @@ template <typename Graph, typename Table, typename Vertex>
 void initialize_distacne_table(Graph& graph, Table& table, Vertex origin) {
     for (const auto& vertex : keys(graph)) {
         if (vertex == origin) {
-            table[vertex] = {0, ""};
+            table[vertex] = {0, {}};
         } else if (has_edge(graph, origin, vertex)) {
             table[vertex] = {edge_length(graph, origin, vertex), origin};
         } else {
-            table[vertex] = {INFINITY, ""};
+            table[vertex] = {INFINITY, {}};
         }
     }
 }

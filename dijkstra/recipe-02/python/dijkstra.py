@@ -1,16 +1,16 @@
 DISTANCE = 0 
-PREVIOUS_NODE = 1 
+PREVIOUS = 1 
 INFINITY = float('inf')  
 
-def get_shortest_distance(table, vertex):
+def get_distance(table, vertex):
     shortest_distance = table[vertex][DISTANCE] 
     return shortest_distance 
 
-def set_shortest_distance(table, vertex, new_distance): 
+def set_distance(table, vertex, new_distance): 
     table[vertex][DISTANCE] = new_distance 
         
-def set_previous_node(table, vertex, previous_node): 
-    table[vertex][PREVIOUS_NODE] = previous_node 
+def set_previous(table, vertex, previous_node): 
+    table[vertex][PREVIOUS] = previous_node 
 
 def has_edge(graph, from_vertex, to_vertex):
     return to_vertex in graph[from_vertex]
@@ -28,7 +28,7 @@ def get_shortest_unincluded_vertex(table, included_vertices):
             min_vertex = node 
     return min_vertex 
 
-def initialize_shortest_distacne_table(graph, table, origin):
+def initialize_distacne_table(graph, table, origin):
     for vertex in graph.keys():
         if vertex == origin:
             table[vertex] = [0, None]
@@ -40,17 +40,16 @@ def initialize_shortest_distacne_table(graph, table, origin):
 
 def find_shortest_path(graph, table, origin): 
     included_vertices = [origin]
-    initialize_shortest_distacne_table(graph, table, origin)
+    initialize_distacne_table(graph, table, origin)
     while len(included_vertices) < len(table.keys()):
         current_node = get_shortest_unincluded_vertex(table, included_vertices)
         included_vertices.append(current_node)
         adjacent_nodes = graph[current_node]
         for vertex in set(adjacent_nodes).difference(set(included_vertices)):
-            current_distance = get_shortest_distance(table, vertex) 
-            new_distance = get_shortest_distance(table, 
-                            current_node) + edge_length(graph, current_node, vertex) 
+            current_distance = get_distance(table, vertex) 
+            new_distance = get_distance(table, current_node) + edge_length(graph, current_node, vertex) 
             if new_distance < current_distance:
-                set_shortest_distance(table, vertex, new_distance)
-                set_previous_node(table, vertex, current_node)
+                set_distance(table, vertex, new_distance)
+                set_previous(table, vertex, current_node)
     return table
 
