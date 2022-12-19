@@ -33,18 +33,18 @@ std::vector<T> to_vector(const std::set<T>& a) {        // convert set to vector
 }
 
 template <typename Table, typename Vertex>
-double get_shortest_distance(Table& table, Vertex vertex) {
+double get_distance(Table& table, Vertex vertex) {
     auto shortest_distance = std::get<DISTANCE>(table[vertex]);
     return shortest_distance;
 }
 
 template <typename Table, typename Vertex>
-void set_shortest_distance(Table& table, Vertex vertex, double distance) {
+void set_distance(Table& table, Vertex vertex, double distance) {
     std::get<DISTANCE>(table[vertex]) = distance;
 }
 
 template <typename Table, typename Vertex>
-void set_previous_vertex(Table& table, Vertex vertex, Vertex previous) {
+void set_previous(Table& table, Vertex vertex, Vertex previous) {
     std::get<PREVIOUS>(table[vertex]) = previous;
 }
 
@@ -73,7 +73,7 @@ Vertex get_shortest_unincluded_vertex(Table& table, const std::set<Vertex>& incl
 }
 
 template <typename Graph, typename Table, typename Vertex>
-void initialize_shortest_distacne_table(Graph& graph, Table& table, Vertex origin) {
+void initialize_distacne_table(Graph& graph, Table& table, Vertex origin) {
     for (const auto& vertex : keys(graph)) {
         if (vertex == origin) {
             table[vertex] = {0, ""};
@@ -88,18 +88,17 @@ void initialize_shortest_distacne_table(Graph& graph, Table& table, Vertex origi
 template <typename Graph, typename Table, typename Vertex>
 Table& find_shortest_path(Graph& graph, Table& table, Vertex origin) {
     std::set<Vertex> included_vertices = {origin};
-    initialize_shortest_distacne_table(graph, table, origin);
+    initialize_distacne_table(graph, table, origin);
     while (included_vertices.size() < table.size()) {
-        auto current_vertex = get_shortest_unincluded_vertex(table, included_vertices);
-        included_vertices.insert(current_vertex);
-        auto adjacent_vertices = graph[current_vertex];
-        for (auto vertex : set_difference(keys(adjacent_vertices), included_vertices)) {
-            auto current_distance = get_shortest_distance(table, vertex);
-            auto new_distance = get_shortest_distance(table, current_vertex) +
-                                edge_length(graph, current_vertex, vertex);
+        auto current_node = get_shortest_unincluded_vertex(table, included_vertices);
+        included_vertices.insert(current_node);
+        auto adjacent_nodes = graph[current_node];
+        for (auto vertex : set_difference(keys(adjacent_nodes), included_vertices)) {
+            auto current_distance = get_distance(table, vertex);
+            auto new_distance = get_distance(table, current_node) + edge_length(graph, current_node, vertex);
             if (new_distance < current_distance) {
-                set_shortest_distance(table, vertex, new_distance);
-                set_previous_vertex(table, vertex, current_vertex);
+                set_distance(table, vertex, new_distance);
+                set_previous(table, vertex, current_node);
             }
         }
     }
