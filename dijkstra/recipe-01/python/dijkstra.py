@@ -46,7 +46,7 @@ def find_shortest_path(graph, table, origin):
         included_vertices.append(current_node)
         adjacent_nodes = graph[current_node]
         for vertex in set(adjacent_nodes).difference(set(included_vertices)):
-            current_distance = get_distance(table, vertex) 
+            current_distance = get_distance(table, vertex)
             new_distance = get_distance(table, current_node) + edge_length(graph, current_node, vertex) 
             if new_distance < current_distance:
                 set_distance(table, vertex, new_distance)

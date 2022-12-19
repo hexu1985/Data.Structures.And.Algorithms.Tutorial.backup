@@ -9,12 +9,6 @@
 #define DISTANCE 0 
 #define PREVIOUS 1 
 
-template <typename Vertex>
-using Record = std::tuple<double, Vertex>;
-
-template <typename Vertex>
-using Table = std::map<Vertex, Record<Vertex>>;
-
 template <typename T>
 std::set<T> set_difference(const std::set<T>& a, const std::set<T>& b) {    // return a-b
     std::set<T> c = a;
@@ -38,18 +32,18 @@ std::vector<T> to_vector(const std::set<T>& a) {        // convert set to vector
     return std::vector<T>(a.begin(), a.end());
 }
 
-template <typename Vertex>
-double get_distance(Table<Vertex>& table, Vertex vertex) {
+template <typename Table, typename Vertex>
+double get_distance(Table& table, Vertex vertex) {
     return std::get<DISTANCE>(table[vertex]);
 }
 
-template <typename Vertex>
-void set_distance(Table<Vertex>& table, Vertex vertex, double distance) {
+template <typename Table, typename Vertex>
+void set_distance(Table& table, Vertex vertex, double distance) {
     std::get<DISTANCE>(table[vertex]) = distance;
 }
 
-template <typename Vertex>
-void set_previous(Table<Vertex>& table, Vertex vertex, Vertex previous) {
+template <typename Table, typename Vertex>
+void set_previous(Table& table, Vertex vertex, Vertex previous) {
     std::get<PREVIOUS>(table[vertex]) = previous;
 }
 
@@ -63,8 +57,8 @@ double edge_length(Graph& graph, Vertex from, Vertex to) {
     return graph[from][to];
 }
 
-template <typename Vertex>
-Vertex get_shortest_unincluded_vertex(Table<Vertex>& table, const std::set<Vertex>& included_vertices) {
+template <typename Table, typename Vertex>
+Vertex get_shortest_unincluded_vertex(Table& table, const std::set<Vertex>& included_vertices) {
     auto unincluded_vertices = to_vector(set_difference(keys(table), included_vertices));
     auto assumed_min = std::get<DISTANCE>(table[unincluded_vertices[0]]);
     auto min_vertex = unincluded_vertices[0];
@@ -76,6 +70,12 @@ Vertex get_shortest_unincluded_vertex(Table<Vertex>& table, const std::set<Verte
     }
     return min_vertex;
 }
+
+template <typename Vertex>
+using Record = std::tuple<double, Vertex>;
+
+template <typename Vertex>
+using Table = std::map<Vertex, Record<Vertex>>;
 
 template <typename Graph, typename Vertex>
 Table<Vertex> create_distacne_table(Graph& graph, Vertex origin) {

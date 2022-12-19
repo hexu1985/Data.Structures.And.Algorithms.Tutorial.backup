@@ -35,8 +35,7 @@ std::vector<T> to_vector(const std::set<T>& a) {        // convert set to vector
 
 template <typename Table, typename Vertex>
 double get_distance(Table& table, Vertex vertex) {
-    auto shortest_distance = std::get<DISTANCE>(table[vertex]);
-    return shortest_distance;
+    return std::get<DISTANCE>(table[vertex]);
 }
 
 template <typename Table, typename Vertex>
