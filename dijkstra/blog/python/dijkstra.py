@@ -27,19 +27,9 @@ def get_shortest_unincluded_vertex(table, included_vertices):
             min_vertex = node 
     return min_vertex 
 
-def initialize_distacne_table(graph, table, origin):
-    for vertex in graph.keys():
-        if vertex == origin:
-            table[vertex] = [0, None]
-        elif has_edge(graph, origin, vertex):
-            table[vertex] = [edge_length(graph, origin, vertex), origin]
-        else:
-            table[vertex] = [float('inf'), None]
-    return table
-
 def find_shortest_path(graph, table, origin): 
-    included_vertices = [origin]
-    initialize_distacne_table(graph, table, origin)
+    table[origin][DISTANCE] = 0
+    included_vertices = list()
     while len(included_vertices) < len(table.keys()):
         current_node = get_shortest_unincluded_vertex(table, included_vertices)
         included_vertices.append(current_node)
@@ -54,22 +44,22 @@ def find_shortest_path(graph, table, origin):
 
 if __name__ == "__main__":
     graph = dict() 
-    graph['A'] = {'B': 4, 'C': 2} 
-    graph['B'] = {'C': 3, 'D': 2, 'E': 3} 
-    graph['C'] = {'B': 1, 'D': 4, 'E': 5} 
-    graph['D'] = dict()
-    graph['E'] = {'D': 1} 
+    graph['s'] = {'t': 10, 'y': 5} 
+    graph['t'] = {'x': 1, 'y': 2} 
+    graph['x'] = {'z': 4} 
+    graph['y'] = {'t': 3, 'x': 9, 'z': 2} 
+    graph['z'] = {'s': 7, 'x': 6} 
     
     table = dict() 
     table = { 
-            'A': [float("inf"), None], 
-            'B': [float("inf"), None], 
-            'C': [float("inf"), None], 
-            'D': [float("inf"), None], 
-            'E': [float("inf"), None], 
+            's': [float("inf"), None], 
+            't': [float("inf"), None], 
+            'x': [float("inf"), None], 
+            'y': [float("inf"), None], 
+            'z': [float("inf"), None], 
     }
     
-    shortest_distance_table = find_shortest_path(graph, table, 'A') 
+    shortest_distance_table = find_shortest_path(graph, table, 's') 
     
     for k in sorted(shortest_distance_table): 
         print("{} - {}".format(k,shortest_distance_table[k])) 

@@ -3,8 +3,8 @@
 
 Dijkstra算法主要用于解决单源点最短路径问题。该算法有如下特点：
 
-- 可以处理有向图或无向图（大部分只提到有向图）；
-- 要求图中的任何边的权重都是非负的；
+- 可以处理有向图或无向图（大部分算法教材只提到有向图）；
+- 要求图中的任何边的权重都是正的；
 - 方法简单，但很强大，是贪心设计模式的例子。
 
 算法导论中Dijkstra的伪码是基于优先级队列来实现的，不过优先级队列本身就可以用一篇文章来介绍，
@@ -13,12 +13,29 @@ Dijkstra算法主要用于解决单源点最短路径问题。该算法有如下
 首先，我们先给出Dijkstra算法（改进版）的伪码，然后，通过具体的例子（一张带边权重的有向图）
 来具体的分析Dijkstra算法，并同时给出对应的Python实现。
 
+伪代码如下：
 Initialize dist(s) to 0, other dist($\cdot$) values to $\infty$
+Initialize prev($\cdot$) to NIL
 R = { } (the "known region")
 while R $\neq$ V:
-    Pick the node v $\not\in$ R with smallest dist($\cdot$)
-    Add v to R
-    for all edges (v, z) $\in$ E:
-        if dist(z) > dist(v) + l(v, z):
-            dist(z) = dist(v) + l(v, z)
-            prev(z) = v
+    Pick the node u $\not\in$ R with smallest dist($\cdot$)
+    Add u to R
+    for all edges (u, v) $\in$ E:
+        if dist(v) > dist(u) + l(u, v):
+            dist(v) = dist(u) + l(u, v)
+            prev(v) = u
+
+以上伪码什么意思呢？就是，从起始顶点s开始向外扩张，持续不断地将生成的图扩张到已知距离最短路径的区域R。
+而顶点加入区域R的顺序，是按照它们与s的距离的顺序：先加入最近的顶点，然后加入更远一些的顶点。
+更确切地说，若“已知区域”是包含s的某个顶点子集R，下一个加入该子集的顶点应该是在R之外同时离s最近的顶点。
+我们记该顶点为v；问题是：如何确定该顶点？
+
+为了回答该问题，考虑顶点u，它是从s到v的最短路径上的前一顶点，即s $\to \cdots \to$ u $\to$ v。
+由于所有边的权重都是正的，因此u一定比v距离s更近，这意味着u在R中 -- 否则将与v是R之外且与s距离最近的顶点这一
+假设相矛盾。因此，从s到v的最短路径即为这样的一条路径，它是基于一条已知最短路径中的某条边的扩展路径。如图，
+
+![known_region](png/known_region.png)
+
+但是通常会有关于当前最短路径集合的很多单边的扩展；其中哪一条确定了v呢？应该是这些扩展路径中的最短路径。
+这是因为，如果存在一条更短的单边扩展路径，又将再次与v是R之外且与s距离最近的顶点这一假设相矛盾。
+因此，很容易就能
