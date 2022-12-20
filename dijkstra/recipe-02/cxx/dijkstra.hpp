@@ -48,11 +48,6 @@ void set_previous(Table& table, Vertex vertex, Vertex previous) {
 }
 
 template <typename Graph, typename Vertex>
-bool has_edge(Graph& graph, Vertex from, Vertex to) {
-    return graph[from].count(to);
-}
-
-template <typename Graph, typename Vertex>
 double edge_length(Graph& graph, Vertex from, Vertex to) {
     return graph[from][to];
 }
@@ -78,13 +73,11 @@ template <typename Vertex>
 using Table = std::map<Vertex, Record<Vertex>>;
 
 template <typename Graph, typename Vertex>
-Table<Vertex> create_distacne_table(Graph& graph, Vertex origin) {
+Table<Vertex> create_distance_table(Graph& graph, Vertex origin) {
     Table<Vertex> table;
     for (const auto& vertex : keys(graph)) {
         if (vertex == origin) {
             table[vertex] = {0, {}};
-        } else if (has_edge(graph, origin, vertex)) {
-            table[vertex] = {edge_length(graph, origin, vertex), origin};
         } else {
             table[vertex] = {INFINITY, {}};
         }
@@ -94,8 +87,8 @@ Table<Vertex> create_distacne_table(Graph& graph, Vertex origin) {
 
 template <typename Graph, typename Vertex>
 Table<Vertex> find_shortest_path(Graph& graph, Vertex origin) {
-    std::set<Vertex> included_vertices = {origin};
-    auto table = create_distacne_table(graph, origin);
+    std::set<Vertex> included_vertices = {};
+    auto table = create_distance_table(graph, origin);
     while (included_vertices.size() < table.size()) {
         auto current_node = get_shortest_unincluded_vertex(table, included_vertices);
         included_vertices.insert(current_node);

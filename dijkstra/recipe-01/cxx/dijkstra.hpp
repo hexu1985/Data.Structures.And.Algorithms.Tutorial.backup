@@ -49,11 +49,6 @@ void set_previous(Table& table, Vertex vertex, Vertex previous) {
 }
 
 template <typename Graph, typename Vertex>
-bool has_edge(Graph& graph, Vertex from, Vertex to) {
-    return graph[from].count(to);
-}
-
-template <typename Graph, typename Vertex>
 double edge_length(Graph& graph, Vertex from, Vertex to) {
     return graph[from][to];
 }
@@ -72,18 +67,16 @@ Vertex get_shortest_unincluded_vertex(Table& table, const std::set<Vertex>& incl
     return min_vertex;
 }
 
-template <typename Graph, typename Table, typename Vertex>
-void initialize_distacne_table(Graph& graph, Table& table, Vertex origin) {
+template <typename Table, typename Vertex>
+void initialize_distance_table(Table& table, Vertex origin) {
     // check distance type is floating point
     using RecordType = typename std::decay<decltype(table[origin])>::type;
     using DistanceType = typename std::tuple_element<DISTANCE, RecordType>::type;
     static_assert(std::is_floating_point<DistanceType>::value, "distance type must be floating point");
 
-    for (const auto& vertex : keys(graph)) {
+    for (const auto& vertex : keys(table)) {
         if (vertex == origin) {
             table[vertex] = {0, {}};
-        } else if (has_edge(graph, origin, vertex)) {
-            table[vertex] = {edge_length(graph, origin, vertex), origin};
         } else {
             table[vertex] = {INFINITY, {}};
         }
@@ -92,8 +85,8 @@ void initialize_distacne_table(Graph& graph, Table& table, Vertex origin) {
 
 template <typename Graph, typename Table, typename Vertex>
 Table& find_shortest_path(Graph& graph, Table& table, Vertex origin) {
-    std::set<Vertex> included_vertices = {origin};
-    initialize_distacne_table(graph, table, origin);
+    initialize_distance_table(table, origin);
+    std::set<Vertex> included_vertices = {};
     while (included_vertices.size() < table.size()) {
         auto current_node = get_shortest_unincluded_vertex(table, included_vertices);
         included_vertices.insert(current_node);
