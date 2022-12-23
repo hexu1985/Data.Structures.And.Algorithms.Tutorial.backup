@@ -20,7 +20,7 @@ R = { } (the "known region")
 while R $\neq$ V:  
 &emsp;Pick the node u $\not\in$ R with smallest dist($\cdot$)  
 &emsp;Add u to R  
-&emsp;for all edges (u, v) $\in$ E:  
+&emsp;for all edges (u, v) $\in$ E and u $\in$ R and v $\not\in$ R:  
 &emsp;&emsp;if dist(v) > dist(u) + l(u, v):  
 &emsp;&emsp;&emsp;dist(v) = dist(u) + l(u, v)  
 &emsp;&emsp;&emsp;prev(v) = u  
@@ -49,6 +49,7 @@ while R $\neq$ V:
 ![dijkstra_a](png/dijkstra_a.png)
 
 该图在如下Python代码中，以邻接表的方式表示，这里为简化代码，并没有自己封装Graph类，而是使用了Python内置的字典类。
+
 ```python
 graph = dict() 
 graph['s'] = {'t': 10, 'y': 5} 
@@ -59,3 +60,299 @@ graph['z'] = {'s': 7, 'x': 6}
 ```
 
 另外，算法伪码中还用到了两个数据结构的对象，一个是区域R的顶点集合，另一个是存放最短距离表。
+
+区域R的顶点集合我们用Python的列表表示：
+
+```python
+included_vertices = list()
+```
+
+存放最短距离表包括三列，分别是顶点，最短距离，最短路径上的前一个（previous）顶点，
+
+| vertex | distance | previous |
+| ------ | -------- | -------- |
+| s      | $\infty$ | NIL      |
+| t      | $\infty$ | NIL      |
+| x      | $\infty$ | NIL      |
+| y      | $\infty$ | NIL      |
+| z      | $\infty$ | NIL      |
+
+而存放最短距离表则还是Python内置的字典类，其中key对应顶点列，value是个元组，包含距离和前一顶点。
+
+```python
+table = dict() 
+table = { 
+        's': [float("inf"), None], 
+        't': [float("inf"), None], 
+        'x': [float("inf"), None], 
+        'y': [float("inf"), None], 
+        'z': [float("inf"), None], 
+}
+```
+
+接下来，我们把伪码直译成Python代码：
+
+```python
+def dijkstra(graph, table, origin): 
+    initialize_distance_table(table, origin)
+    included_vertices = list()
+    while len(included_vertices) < len(table.keys()):
+        current_node = get_shortest_unincluded_vertex(table, included_vertices)
+        included_vertices.append(current_node)
+        adjacent_nodes = graph[current_node]
+        for vertex in set(adjacent_nodes).difference(set(included_vertices)):
+            current_distance = get_distance(table, vertex)
+            new_distance = get_distance(table, current_node) + edge_length(graph, current_node, vertex) 
+            if new_distance < current_distance:
+                set_distance(table, vertex, new_distance)
+                set_previous(table, vertex, current_node)
+    return table
+```
+
+我们逐行拆解代码：
+
+代码
+```python
+    initialize_distance_table(table, origin)
+```
+对应的是  
+Initialize dist(s) to 0, other dist($\cdot$) values to $\infty$  
+Initialize prev($\cdot$) to NIL  
+这两行伪码的工作，initialize_distance_table的具体实现如下：
+
+```python
+def initialize_distance_table(table, origin):
+    for vertex in table.keys():
+        if vertex == origin:
+            table[vertex] = [0, None]
+        else:
+            table[vertex] = [float('inf'), None]
+    return table
+```
+
+代码
+```python
+    included_vertices = list()
+```
+对应的是  
+R = { } (the "known region")  
+这行伪码的工作
+
+
+代码
+```python
+    while len(included_vertices) < len(table.keys()):
+```
+对应的是  
+while R $\neq$ V:  
+这行伪码的工作
+
+在我们的例子中，源顶点是s，所以`origin = 's'`
+当代码第一次执行到`while len(included_vertices) < len(table.keys()):`这行时，  
+R = { } (the "known region")  
+即`included_vertices = []`  
+
+距离表的内容是这样的：
+
+| vertex | distance | previous |
+| ------ | -------- | -------- |
+| s      | 0        | NIL      |
+| t      | $\infty$ | NIL      |
+| x      | $\infty$ | NIL      |
+| y      | $\infty$ | NIL      |
+| z      | $\infty$ | NIL      |
+
+图的遍历情况是这样的：
+
+![dijkstra_a](png/dijkstra_a.png)
+
+代码
+```python
+        current_node = get_shortest_unincluded_vertex(table, included_vertices)
+```
+对应的是  
+&emsp;Pick the node u $\not\in$ R with smallest dist($\cdot$)  
+这行伪码的工作，get_shortest_unincluded_vertex的具体实现如下：
+
+```python
+# DISTANCE = 1
+def get_shortest_unincluded_vertex(table, included_vertices): 
+    unincluded_vertices = list(set(table.keys()).difference(set(included_vertices))) 
+    assumed_min = table[unincluded_vertices[0]][DISTANCE] 
+    min_vertex = unincluded_vertices[0] 
+    for node in unincluded_vertices: 
+        if table[node][DISTANCE] < assumed_min: 
+            assumed_min = table[node][DISTANCE] 
+            min_vertex = node 
+    return min_vertex 
+```
+
+第一次执行完`current_node = get_shortest_unincluded_vertex(table, included_vertices)`这行时，`current_node = 's'`
+
+代码
+```python
+        included_vertices.append(current_node)
+```
+对应的是  
+&emsp;Add u to R  
+这行伪码的工作
+
+第一次执行到`included_vertices.append(current_node)`这行时，`included_vertices = ['s']`
+
+代码
+```python
+        adjacent_nodes = graph[current_node]`和  
+        for vertex in set(adjacent_nodes).difference(set(included_vertices)):
+```
+对应的是  
+&emsp;for all edges (u, v) $\in$ E and u $\in$ R and v $\not\in$ R:  
+这行伪码的工作
+
+由于Python实现是通过邻接表的方式表示图的，所以Python代码中先获取current_node（伪码中的u顶点）的所有邻接节点，然后通过集合差集减去included_vertices（伪码中的区域R的顶点集），然后就能得到伪码中的边集。
+
+第一次执行到`for vertex in set(adjacent_nodes).difference(set(included_vertices)):`这行时，相当于执行了`for vertex in ['t', 'y']`
+
+
+代码
+```python
+            current_distance = get_distance(table, vertex)
+            new_distance = get_distance(table, current_node) + edge_length(graph, current_node, vertex) 
+            if new_distance < current_distance:
+                set_distance(table, vertex, new_distance)
+                set_previous(table, vertex, current_node)
+```
+对应的是  
+&emsp;&emsp;if dist(v) > dist(u) + l(u, v):  
+&emsp;&emsp;&emsp;dist(v) = dist(u) + l(u, v)  
+&emsp;&emsp;&emsp;prev(v) = u  
+这三行伪码的工作，其中，为了代码可读性，封装了几个helper函数，函数定义如下：
+
+```python
+DISTANCE = 0 
+PREVIOUS = 1 
+
+def get_distance(table, vertex):
+    return table[vertex][DISTANCE] 
+
+def set_distance(table, vertex, new_distance): 
+    table[vertex][DISTANCE] = new_distance 
+        
+def set_previous(table, vertex, previous_node): 
+    table[vertex][PREVIOUS] = previous_node 
+
+def edge_length(graph, from_vertex, to_vertex): 
+    return graph[from_vertex][to_vertex] 
+```
+
+而第一次`while len(included_vertices) < len(table.keys()):`循环迭代结束后，  
+`included_vertices = ['s']` # R = {s} 
+
+距离表的内容是这样的：
+
+| vertex | distance | previous |
+| ------ | -------- | -------- |
+| s      | 0*       | NIL      |
+| t      | 10       | s        |
+| x      | $\infty$ | NIL      |
+| y      | 5        | s        |
+| z      | $\infty$ | NIL      |
+
+图的遍历情况是这样的：
+
+![dijkstra_b](png/dijkstra_b.png)
+
+而第二次执行完`current_node = get_shortest_unincluded_vertex(table, included_vertices)`这行时，`current_node = 'y'`
+
+而第二次`while len(included_vertices) < len(table.keys()):`循环迭代结束后，  
+`included_vertices = ['s', 'y']` # R = {s, y} 
+
+距离表的内容是这样的：
+
+| vertex | distance | previous |
+| ------ | -------- | -------- |
+| s      | 0*       | NIL      |
+| t      | 8        | y        |
+| x      | 14       | y        |
+| y      | 5*       | s        |
+| z      | 7        | y        |
+
+图的遍历情况是这样的：
+
+![dijkstra_c](png/dijkstra_c.png)
+
+而第三次执行完`current_node = get_shortest_unincluded_vertex(table, included_vertices)`这行时，`current_node = 'z'`
+
+而第三次`while len(included_vertices) < len(table.keys()):`循环迭代结束后，  
+`included_vertices = ['s', 'y', 'z']` # R = {s, y, z} 
+
+距离表的内容是这样的：
+
+| vertex | distance | previous |
+| ------ | -------- | -------- |
+| s      | 0*       | NIL      |
+| t      | 8        | y        |
+| x      | 13       | z        |
+| y      | 5*       | s        |
+| z      | 7*       | y        |
+
+图的遍历情况是这样的：
+
+![dijkstra_d](png/dijkstra_d.png)
+
+而第四次执行完`current_node = get_shortest_unincluded_vertex(table, included_vertices)`这行时，`current_node = 't'`
+
+而第四次`while len(included_vertices) < len(table.keys()):`循环迭代结束后，  
+`included_vertices = ['s', 'y', 'z', 't']` # R = {s, y, z, t} 
+
+距离表的内容是这样的：
+
+| vertex | distance | previous |
+| ------ | -------- | -------- |
+| s      | 0*       | NIL      |
+| t      | 8*       | y        |
+| x      | 9        | t        |
+| y      | 5*       | s        |
+| z      | 7*       | y        |
+
+图的遍历情况是这样的：
+
+![dijkstra_e](png/dijkstra_e.png)
+
+而第五次执行完`current_node = get_shortest_unincluded_vertex(table, included_vertices)`这行时，`current_node = 'x'`
+
+而第五次`while len(included_vertices) < len(table.keys()):`循环迭代结束后，  
+`included_vertices = ['s', 'y', 'z', 't', 'x']` # R = {s, y, z, t, x} 
+
+距离表的内容是这样的：
+
+| vertex | distance | previous |
+| ------ | -------- | -------- |
+| s      | 0*       | NIL      |
+| t      | 8*       | y        |
+| x      | 9*       | t        |
+| y      | 5*       | s        |
+| z      | 7*       | y        |
+
+图的遍历情况是这样的：
+
+![dijkstra_f](png/dijkstra_f.png)
+
+至此，R = V，等第六次`while len(included_vertices) < len(table.keys()):`判断时，条件为假，退出循环，dijkstra算法结束。
+
+最终，我们用Python打印结果，
+
+```python
+shortest_distance_table = dijkstra(graph, table, 's') 
+
+for k in sorted(shortest_distance_table): 
+    print("{} - {}".format(k,shortest_distance_table[k])) 
+```
+
+会得到如下输出
+```
+s - [0, None]
+t - [8, 'y']
+x - [9, 't']
+y - [5, 's']
+z - [7, 'y']
+```
