@@ -13,17 +13,17 @@ Dijkstra算法主要用于解决单源点最短路径问题。该算法有如下
 首先，我们先给出Dijkstra算法的伪码，然后，通过具体的例子（一张带边权重的有向图）
 来具体的分析Dijkstra算法，并同时给出对应的Python实现。
 
-伪代码如下：
-Initialize dist(s) to 0, other dist($\cdot$) values to $\infty$
-Initialize prev($\cdot$) to NIL
-R = { } (the "known region")
-while R $\neq$ V:
-    Pick the node u $\not\in$ R with smallest dist($\cdot$)
-    Add u to R
-    for all edges (u, v) $\in$ E:
-        if dist(v) > dist(u) + l(u, v):
-            dist(v) = dist(u) + l(u, v)
-            prev(v) = u
+伪代码如下：  
+Initialize dist(s) to 0, other dist($\cdot$) values to $\infty$  
+Initialize prev($\cdot$) to NIL  
+R = { } (the "known region")  
+while R $\neq$ V:  
+&emsp;Pick the node u $\not\in$ R with smallest dist($\cdot$)  
+&emsp;Add u to R  
+&emsp;for all edges (u, v) $\in$ E:  
+&emsp;&emsp;if dist(v) > dist(u) + l(u, v):  
+&emsp;&emsp;&emsp;dist(v) = dist(u) + l(u, v)  
+&emsp;&emsp;&emsp;prev(v) = u  
 
 以上伪码什么意思呢？就是，从起始顶点s开始向外扩张，持续不断地扩展图的已知最短路径的区域R，直至所有顶点。
 而顶点加入区域R的顺序，是按照它们与s的距离的顺序：先加入最近的顶点，然后加入更远一些的顶点。
