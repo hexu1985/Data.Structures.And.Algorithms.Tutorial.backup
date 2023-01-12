@@ -9,7 +9,7 @@ class Iterator:
         self.current = node
 
     def __iter__(self):
-        pass
+        return self
 
     def __next__(self):
         if self.current:
