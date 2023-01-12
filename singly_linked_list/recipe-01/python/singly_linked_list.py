@@ -4,6 +4,21 @@ class Node:
         self.data = data
         self.next = None
 
+class Iterator:
+    def __init__(self, node):
+        self.current = node
+
+    def __iter__(self):
+        pass
+
+    def __next__(self):
+        if self.current:
+            val = self.current.data
+            self.current = self.current.next
+            return val
+        else:
+            raise StopIteration()
+
 class SinglyLinkedList:
     """ A singly-linked list. """
     def __init__(self):
@@ -25,11 +40,7 @@ class SinglyLinkedList:
     
     def __iter__(self):
         """ Iterate through the list. """
-        current = self.head
-        while current:
-            val = current.data
-            current = current.next
-            yield val
+        return Iterator(self.head)
 
     def Delete(self, data):
         """ Delete a node from the list """
