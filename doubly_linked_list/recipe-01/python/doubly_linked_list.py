@@ -54,8 +54,9 @@ class DoublyLinkedList(object):
                 else:
                     self.tail = current.prev
                 self.count -= 1
-                return
+                return True
             current = current.next
+        return False
 
     def Search(self, data):
         """Search through the list. Return True if data is found, otherwise False."""

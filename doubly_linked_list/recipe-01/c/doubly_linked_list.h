@@ -99,7 +99,7 @@ static void ListAppend(DoublyLinkedList* list, ItemType data) {
 }
 
 // """ Delete a node from the list """
-static void ListDelete(DoublyLinkedList* list, ItemType data) {
+static bool ListDelete(DoublyLinkedList* list, ItemType data) {
     Node* current = list->head;
     while (current) {
         if (ItemEqual(current->data, data)) {
@@ -117,10 +117,11 @@ static void ListDelete(DoublyLinkedList* list, ItemType data) {
             }
             FreeNode(current);
             list->count -= 1;
-            return;
+            return true;
         }
         current = current->next;
     }
+    return false;
 }
 
 // """Search through the list. Return True if data is found, otherwise False."""

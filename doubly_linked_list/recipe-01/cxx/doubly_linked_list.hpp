@@ -126,7 +126,7 @@ public:
     }
 
     // """ Delete a node from the list. """
-    void Delete(const T& data) {
+    bool Delete(const T& data) {
         auto current = head;
         while (current) {
             if (current->data == data) {
@@ -144,10 +144,11 @@ public:
                 }
                 delete current;
                 count -= 1;
-                return;
+                return true;
             }
             current = current->next;
         }
+        return false;
     }
 
     // """Search through the list. Return True if data is found, otherwise False."""
