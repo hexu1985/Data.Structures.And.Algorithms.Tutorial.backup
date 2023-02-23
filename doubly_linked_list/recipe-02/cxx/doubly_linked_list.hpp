@@ -123,7 +123,7 @@ public:
     // """ Append an item to the list. """
     void Append(const T& data) {
         auto node = new Node<T>(data);
-        // """ insert before nil. """
+        // insert before nil.
         auto current = nil;
         auto prev_node = current->prev;
 
@@ -137,7 +137,7 @@ public:
     }
 
     // """ Delete a node from the list. """
-    void Delete(const T& data) {
+    bool Delete(const T& data) {
         auto current = nil->next;
         while (current != nil) {
             if (current->data == data) {
@@ -149,10 +149,11 @@ public:
 
                 delete current;
                 count -= 1;
-                return;
+                return true;
             }
             current = current->next;
         }
+        return false;
     }
 
     // """Search through the list. Return True if data is found, otherwise False."""
@@ -170,7 +171,7 @@ public:
     // """ Insert new node at the head of linked list. """
     void InsertHead(const T& data) {
         auto node = new Node<T>(data);
-        // """ insert before nil->next. """
+        // insert before nil->next.
         auto current = nil->next;
         auto prev_node = current->prev;
 
