@@ -17,7 +17,7 @@ Dijkstra算法主要用于解决单源点最短路径问题。该算法有如下
 
 <u>procedure dijkstra</u>(G, l, s):  
 Input:  Graph G = (V, E), directed or undirected;  
-&emsp;&emsp;&emsp;positive edge lengths {$l_e : e \in E$}; vertex $s \in V$  
+&emsp;&emsp;&emsp;positive edge lengths { $l_e : e \in E$ }; vertex $s \in V$  
 Output: For all vertices u reachable from s, dist(u) is set  
 &emsp;&emsp;&emsp;&emsp;to the distance from s to u.  
 
