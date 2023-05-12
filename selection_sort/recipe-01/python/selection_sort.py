@@ -17,6 +17,6 @@ def SelectionSort(v):
                 smallIndex = j
         # when finished, place smallest item in arr[pass_]
         if smallIndex != pass_:
-            temp = v[pass_];
-            v[pass_] = v[smallIndex];
-            v[smallIndex] = temp;
+            temp = v[pass_]
+            v[pass_] = v[smallIndex]
+            v[smallIndex] = temp
